@@ -26,7 +26,7 @@ def processFile(path):
     parser = OutputFileParser()
 
     try:
-        output = parser.parse(path, parse_details=False)
+        output = parser.parse(path)
 
         if len(output.errors) > 0:
             return State.ERROR
