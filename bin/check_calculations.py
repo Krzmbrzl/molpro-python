@@ -5,11 +5,13 @@ import os
 from enum import Enum
 
 from molpro import OutputFileParser
+from molpro import MolproError
 
 class State(Enum):
     OK = 1
     PENDING = 2
     ERROR = 3
+    INVALID = 4
 
 # https://stackoverflow.com/a/27265453
 NO_COLOR = "\033[0m"
@@ -22,12 +24,16 @@ PURPLE = "\033[35m"
 def processFile(path):
     parser = OutputFileParser()
 
-    output = parser.parse(path, parse_details=False)
+    try:
+        output = parser.parse(path, parse_details=False)
 
-    if len(output.errors) > 0:
-        return State.ERROR
+        if len(output.errors) > 0:
+            return State.ERROR
 
-    return State.OK if output.calculation_finished else State.PENDING
+        return State.OK if output.calculation_finished else State.PENDING
+    except MolproError:
+        return State.INVALID
+
 
 def printStatus(path: str, state: State, indent: str = ""):
     msg = indent
@@ -37,6 +43,8 @@ def printStatus(path: str, state: State, indent: str = ""):
         msg += BLUE + "PENDING" + NO_COLOR
     elif state == State.ERROR:
         msg += RED + "ERROR" + NO_COLOR
+    elif state == State.INVALID:
+        msg += PURPLE + "INALID" + NO_COLOR
 
     msg += ": " + path
 
