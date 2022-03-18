@@ -1,12 +1,15 @@
 from typing import Optional
 
+from molpro import ParserData
 
-class SEWARD_Data:
-    molecule_type: Optional[str] = None
-    basis_set_size: int = -1
 
+class SEWARD_Data(ParserData):
     def __init__(self):
-        pass
+        self.molecule_type: Optional[str] = None
+        self.basis_set_size: int = -1
+
+    def associatedProgrameName(self):
+        return "SEWARD"
 
 
 

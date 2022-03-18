@@ -8,3 +8,7 @@ export PATH="$HOME/molpro-python/bin:$PATH"
 export PYTHONPATH="$HOME/molpro-python/modules:$PYTHONPATH"
 ```
 
+## Running tests
+
+In order to run the test cases, use the `run_tests.py` script. This will allow you to run the tests, without having to modify your `PYTHONPATH`
+beforehand.

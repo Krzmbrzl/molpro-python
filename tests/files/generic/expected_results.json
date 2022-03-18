@@ -1,0 +1,18 @@
+{
+	"all_good_1.out": {
+		"errors": [],
+		"warnings": []
+	},
+	"all_good_2.out": {
+		"errors": [],
+		"warnings": []
+	},
+	"illegal_print_option.out": {
+		"errors": [ "GLOBAL ERROR fehler on processor   0" ],
+		"warnings": []
+	},
+	"input_error.out": {
+		"errors": [ "Input verification failed" ],
+		"warnings": []
+	}
+}

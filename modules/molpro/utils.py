@@ -1,5 +1,6 @@
 from typing import Optional
 from typing import List
+from typing import Iterator
 
 from molpro import OutputFormatError
 
@@ -43,8 +44,9 @@ def consume(content: str, prefix: str = "", gobble_until: Optional[str] = None, 
     return content if not strip else content.strip()
 
 
-def skip_to(content_list: List[str], index: int, contains: Optional[str] = None, startswith: Optional[str] = None, endswith: Optional[str] = None) -> int:
-    for i in range(index, len(content_list)):
+def skip_to(content_list: List[str], indexIt: Iterator[int], contains: Optional[str] = None, startswith: Optional[str] = None, endswith: Optional[str]
+            = None, default: Optional[int] = None) -> int:
+    for i in indexIt:
         found_content = True
 
         if found_content and not contains is None:
@@ -59,4 +61,7 @@ def skip_to(content_list: List[str], index: int, contains: Optional[str] = None,
         if found_content:
             return i
 
-    return len(content_list)
+    if default is None:
+        raise StopIteration()
+    else:
+        return default

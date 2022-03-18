@@ -1,0 +1,45 @@
+
+ Working directory              : /SCR1/adam/molpro.rwA63keS0L/
+ Global scratch directory       : /SCR1/adam/molpro.rwA63keS0L/
+ Wavefunction directory         : /home/linux1_i1/adam/wfu/
+ Main file repository           : /SCR1/adam/molpro.rwA63keS0L/
+
+ id        : koehnrobert
+
+ Nodes     nprocs
+ linux3       1
+ GA implementation: MPI file
+ GA implementation (serial work in mppx): MPI file
+
+ Using customized tuning parameters: mindgm=1; mindgv=20; mindgc=4; mindgr=1; noblas=0; minvec=7
+ default implementation of scratch files=df  
+
+
+ Variables initialized (1015), CPU time= 0.00 sec
+ nosym
+ 
+ gprint,orbitals
+ basis=vdz
+ 
+ r=1.85,theta=104
+ geometry={O;
+           H1,O,r;
+           H2,O,r,H1,theta}
+ 
+ {df-rhf, orbprint=10}
+ 
+ {df-multi; orbprint,10; bla, bla}
+ Commands initialized (834), CPU time= 0.01 sec, 672 directives.
+ Default parameters read. Elapsed time= 0.14 sec
+
+ Checking input...
+
+ Unknown directive BLA for command DF-MULTI
+
+    1 input errors found
+
+ ? Error
+ ? Input errors!
+ ? The problem occurs in check_input
+
+ GLOBAL ERROR fehler on processor   0                                         
