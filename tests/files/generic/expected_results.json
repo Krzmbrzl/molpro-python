@@ -7,12 +7,35 @@
 		"errors": [],
 		"warnings": []
 	},
+	"pending.out": {
+		"errors": [],
+		"warnings": []
+	},
 	"illegal_print_option.out": {
-		"errors": [ "GLOBAL ERROR fehler on processor   0" ],
+		"errors": [
+			"GLOBAL ERROR fehler on processor   0"
+		],
 		"warnings": []
 	},
 	"input_error.out": {
-		"errors": [ "Input verification failed" ],
+		"errors": [
+			"Input verification failed"
+		],
 		"warnings": []
+	},
+	"insufficient_memory.out": {
+		"errors": [
+			"Insufficient memory to allocate a new array of length 20977040650 8-byte words (in memory)",
+			"GLOBAL ERROR fehler on processor   0"
+		],
+		"warnings": []
+	},
+	"different_reference_energies.out": {
+		"errors": [],
+		"warnings": [
+			"Reference energies from GeCCo and Molpro differ! (in CMRCC)",
+			"Reference energies from GeCCo and Molpro differ! (in CMRCC)",
+			"Reference energies from GeCCo and Molpro differ! (in CMRCC)"
+		]
 	}
 }

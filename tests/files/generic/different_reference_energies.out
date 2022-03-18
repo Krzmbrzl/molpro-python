@@ -1,0 +1,789 @@
+
+ Working directory              : /scratch/st_ac131646.5251405/molpro.JTJxslT9M3/
+ Global scratch directory       : /scratch/st_ac131646.5251405/molpro.JTJxslT9M3/
+ Wavefunction directory         : /lustre/home/st/st_us-031110/st_ac131646/projects/icMRCC-paper/m-benzyne/m-benzyne_singlett_cc-pVDZ_22ge_relaxed/
+ Main file repository           : /scratch/st_ac131646.5251405/molpro.JTJxslT9M3/
+
+ id        : koehnrobert
+
+ Nodes     nprocs
+ n0107        1
+ GA implementation: MPI file
+ GA implementation (serial work in mppx): MPI file
+
+ Using customized tuning parameters: mindgm=1; mindgv=20; mindgc=4; mindgr=1; noblas=0; minvec=7
+ default implementation of scratch files=df  
+
+
+ Variables initialized (1015), CPU time= 0.00 sec
+ memory,4000,m
+ gthresh,orbital=1d-13,energy=1d-8
+ gprint,orbital
+ basis,cc-pVDZ
+ angstrom
+ geom={
+ 10
+ C    0.00000000000000      0.00000000000000     -1.59636600000000
+ C    0.00000000000000      1.06573100000000     -0.70322100000000
+ C    0.00000000000000     -1.06573100000000     -0.70322100000000
+ C    0.00000000000000      0.00000000000000      1.45056500000000
+ C    0.00000000000000      1.19116100000000      0.68511900000000
+ C    0.00000000000000     -1.19116100000000      0.68511900000000
+ H    0.00000000000000      0.00000000000000     -2.68876600000000
+ H    0.00000000000000      2.18351400000000      1.15224500000000
+ H    0.00000000000000     -2.18351400000000      1.15224500000000
+ H    0.00000000000000      0.00000000000000      2.55136500000000}
+ {casscf;maxiter,40
+ occ,11,2,7,1
+ closed,10,2,6,1
+ wf,40,1,0}
+ 
+ do i=1,3
+ {cmrcc,gecco,max_en=2,max_res=2,relax=T
+ core,4,0,2,0
+ wf,40,1,0}
+ enddo
+ 
+ Commands initialized (834), CPU time= 0.01 sec, 672 directives.
+ Default parameters read. Elapsed time= 0.12 sec
+
+ Checking input...
+ Passed
+1
+
+
+                                         ***  PROGRAM SYSTEM MOLPRO  ***
+                                       Copyright, TTI GmbH Stuttgart, 2015
+                                    Version 2022.2 linked Fri Feb 25 15:46:38 2022
+
+
+ **********************************************************************************************************************************
+ LABEL *                                                                                 
+  64 bit serial version                                                                  DATE: 17-Mar-22          TIME: 21:51:33  
+ **********************************************************************************************************************************
+
+ SHA1:             30aa63e668a0f6fada0aaaa022d4e13a0508f1bc
+ **********************************************************************************************************************************
+
+ Memory per process:      4000 MW
+ Total memory per node:   4000 MW
+
+ GA preallocation disabled
+ GA check disabled
+
+ Variable memory set to 4000.0 MW
+
+
+ THRESHOLDS:
+
+ ZERO    =  1.00D-12  ONEINT  =  1.00D-12  TWOINT  =  1.00D-11  PREFAC  =  1.00D-14  XXXXXX  =  1.00D-09  EORDER  =  1.00D-04
+ ENERGY  =  1.00D-08  ETEST   =  0.00D+00  EDENS   =  0.00D+00  THRDEDEF=  1.00D-06  GRADIENT=  1.00D-05  STEP    =  1.00D-03
+ ORBITAL =  1.00D-13  CIVEC   =  1.00D-05  COEFF   =  1.00D-04  PRINTCI =  5.00D-02  PUNCHCI =  9.90D+01  OPTGRAD =  3.00D-04
+ OPTENERG=  1.00D-06  OPTSTEP =  3.00D-04  THRGRAD =  1.00D-10  COMPRESS=  1.00D-11  VARMIN  =  1.00D-07  VARMAX  =  1.00D-03
+ THRDOUB =  0.00D+00  THRDIV  =  1.00D-05  THRRED  =  1.00D-07  THRPSP  =  1.00D+00  THRDC   =  1.00D-10  THRCS   =  1.00D-10
+ THRNRM  =  1.00D-08  THREQ   =  0.00D+00  THRDE   =  1.00D+00  THRREF  =  1.00D-05  SPARFAC =  1.00D+00  THRDLP  =  1.00D-07
+ THRDIA  =  1.00D-10  THRDLS  =  1.00D-07  THRGPS  =  0.00D+00  THRKEX  =  0.00D+00  THRDIS  =  2.00D-01  THRVAR  =  1.00D-10
+ THRLOC  =  1.00D-06  THRGAP  =  1.00D-06  THRLOCT = -1.00D+00  THRGAPT = -1.00D+00  THRORB  =  1.00D-06  THRMLTP =  0.00D+00
+ THRCPQCI=  1.00D-10  KEXTA   =  0.00D+00  THRCOARS=  0.00D+00  SYMTOL  =  1.00D-06  GRADTOL =  1.00D-06  THROVL  =  1.00D-08
+ THRORTH =  1.00D-08  THRDLOVL= -1.00D+00  GRID    =  1.00D-06  GRIDMAX =  1.00D-03  DTMAX   =  0.00D+00  THROCCDE=  1.00D-01
+ THROCCDE=  1.00D-01  THRPRINT=  2.50D-01
+
+
+ SETTING BASIS          =    CC-PVDZ
+ ZUNIT=ANG
+
+
+ Geometry recognized as XYZ
+
+
+
+ Recomputing integrals since basis changed
+
+
+ Using spherical harmonics
+
+ Library entry C      S cc-pVDZ              selected for orbital group  1
+ Library entry C      P cc-pVDZ              selected for orbital group  1
+ Library entry C      D cc-pVDZ              selected for orbital group  1
+ Library entry H      S cc-pVDZ              selected for orbital group  2
+ Library entry H      P cc-pVDZ              selected for orbital group  2
+
+
+ PROGRAM * SEWARD (Integral evaluation for generally contracted gaussian basis sets)     Author: Roland Lindh, 1990
+
+ Geometry written to block  1 of record 700
+
+
+ Point group  C2v 
+
+
+
+ ATOMIC COORDINATES
+
+ NR  ATOM    CHARGE       X              Y              Z
+
+   1  C       6.00    0.000000000    0.000000000   -3.016694535
+   2  C       6.00    0.000000000    2.013939713   -1.328895095
+   3  C       6.00    0.000000000   -2.013939713   -1.328895095
+   4  C       6.00    0.000000000    0.000000000    2.741170576
+   5  C       6.00    0.000000000    2.250968060    1.294687273
+   6  C       6.00    0.000000000   -2.250968060    1.294687273
+   7  H       1.00    0.000000000    0.000000000   -5.081031353
+   8  H       1.00    0.000000000    4.126243449    2.177427478
+   9  H       1.00    0.000000000   -4.126243449    2.177427478
+  10  H       1.00    0.000000000    0.000000000    4.821381094
+
+ Bond lengths in Bohr (Angstrom)
+
+ 1-2  2.627664384  1-3  2.627664384  1-7  2.064336819  2-5  2.634267807  3-6  2.634267807
+     ( 1.390500110)     ( 1.390500110)     ( 1.092400000)     ( 1.393994491)     ( 1.393994491)
+
+  4- 5  2.675662751   4- 6  2.675662751   4-10  2.080210518   5- 8  2.072652420   6- 9  2.072652420
+       ( 1.415899752)       ( 1.415899752)       ( 1.100800000)       ( 1.096800427)       ( 1.096800427)
+
+ Bond angles
+
+  1-2-5  135.12736847   1-3-6  135.12736847   2-1-3  100.07004201   2-1-7  129.96497899
+
+  2-5-4  117.56261291   2-5-8  120.36995809   3-1-7  129.96497899   3-6-4  117.56261291
+
+  3-6-9  120.36995809   4-5-8  122.06742900   4-6-9  122.06742900   5-4-6  114.54999524
+
+  5- 4-10  122.72500238   6- 4-10  122.72500238
+
+ NUCLEAR CHARGE:                   40
+ NUMBER OF PRIMITIVE AOS:         190
+ NUMBER OF SYMMETRY AOS:          184
+ NUMBER OF CONTRACTIONS:          104   (   44A1  +   17B1  +   32B2  +   11A2  )
+ NUMBER OF INNER CORE ORBITALS:     0   (    0A1  +    0B1  +    0B2  +    0A2  )
+ NUMBER OF OUTER CORE ORBITALS:     6   (    4A1  +    0B1  +    2B2  +    0A2  )
+ NUMBER OF VALENCE ORBITALS:       28   (   13A1  +    4B1  +    9B2  +    2A2  )
+
+
+ NUCLEAR REPULSION ENERGY  184.34778994
+
+
+ Eigenvalues of metric
+
+         1 0.552E-03 0.244E-02 0.366E-02 0.164E-01 0.200E-01 0.272E-01 0.282E-01 0.297E-01
+         2 0.510E-01 0.109E+00 0.172E+00 0.209E+00 0.298E+00 0.328E+00 0.422E+00 0.454E+00
+         3 0.192E-02 0.355E-02 0.483E-02 0.212E-01 0.268E-01 0.406E-01 0.622E-01 0.825E-01
+         4 0.100E+00 0.169E+00 0.284E+00 0.394E+00 0.464E+00 0.492E+00 0.997E+00 0.151E+01
+
+
+ Contracted 2-electron integrals neglected if value below      1.0D-12
+ AO integral compression algorithm  1   Integral accuracy      1.0D-12
+
+     25.690 MB (compressed) written to integral file ( 67.3%)
+
+
+ NUMBER OF SORTED TWO-ELECTRON INTEGRALS:    4029861.     BUFFER LENGTH:  32768
+ NUMBER OF SEGMENTS:   1  SEGMENT LENGTH:    4029861      RECORD LENGTH: 524288
+
+ Memory used in sort:       4.59 MW
+
+ SORT1 READ     4756131. AND WROTE     3964592. INTEGRALS IN     12 RECORDS. CPU TIME:     0.09 SEC, REAL TIME:     0.11 SEC
+ SORT2 READ     3964592. AND WROTE     4029861. INTEGRALS IN     98 RECORDS. CPU TIME:     0.12 SEC, REAL TIME:     0.13 SEC
+
+ FILE SIZES:   FILE 1:    56.1 MBYTE,  FILE 4:    50.4 MBYTE,   TOTAL:    106.4 MBYTE
+
+ OPERATOR DM      FOR CENTER  0  COORDINATES:    0.000000    0.000000    0.000000
+
+
+ **********************************************************************************************************************************
+ DATASETS  * FILE   NREC   LENGTH (MB)   RECORD NAMES
+              1      19       49.63       500      610      700      900      950      970     1000      129      960     1100   
+                                          VAR    BASINP    GEOM    SYMINP    ZMAT    AOBASIS   BASIS     P2S    ABASIS      S 
+                                         1400     1410     1200     1210     1080     1600     1650     1300     1700   
+                                           T        V       H0       H01     AOSYM     SMH    MOLCAS    ERIS     OPER   
+
+ PROGRAMS   *        TOTAL       INT
+ CPU TIMES  *         1.49      1.35
+ REAL TIME  *         2.99 SEC
+ DISK USED  *       101.94 MB
+ **********************************************************************************************************************************
+
+ PROGRAM * MULTI (Direct Multiconfiguration SCF)       Authors: P.J. Knowles, H.-J. Werner (1984)
+                                                                D.A. Kreplin, P.J. Knowles, H.-J. Werner (2019)
+
+ Number of closed-shell orbitals:  19 (   10    2    6    1)
+ Number of active  orbitals:        2 (    1    0    1    0)
+ Number of external orbitals:      83 (   33   15   25   10)
+
+ State symmetry 1
+
+ Number of active electrons:   2    Spin symmetry=Singlet   Space symmetry=1
+ Number of states:             1
+ Number of CSFs:               2   (2 determinants, 4 intermediate states)
+
+ Orbital guess generated from atomic densities. Full valence occupancy:   17   4  11   2
+
+ Wavefunction dump at record             2140.2
+
+ Convergence thresholds  0.10E-04 (gradient)  0.10E-07 (energy)
+ 
+ Number of orbital rotations:  594  ( 16 closed/active, 520 closed/virtual, 0 active/active, 58 active/virtual )
+ Total number of variables:    596
+ 
+ Second-order MCSCF: L-BFGS accelerated
+ 
+ ITER  MIC  NCI  NEG     ENERGY(VAR)    ENERGY(PROJ) ENERGY CHANGE       GRAD(0)  GRAD(ORB)   GRAD(CI)      STEP      TIME
+   1   13    6    0   -229.36128196    -229.42835811   -0.06707615    0.30553171 0.00103573 0.00000000  0.23E+00      0.19
+   2   12    7    0   -229.42895330    -229.42907974   -0.00012643    0.01775525 0.00000486 0.00000000  0.86E-02      0.38
+   3   16    9    0   -229.42907999    -229.42907999   -0.00000000    0.00005519 0.00000000 0.00000000  0.40E-04      0.59
+
+ CONVERGENCE REACHED!  Final gradient:    0.00000000 ( 0.12E-08)
+                       Final energy:   -229.42907999
+ 
+ First order charge density matrix for state 1.1 saved on record 2140.2 (density set 1)
+ 
+ Results for state 1.1
+ =====================
+ !MCSCF STATE 1.1 Energy                      -229.429079992804
+ Nuclear energy                                184.34778994
+ Kinetic energy                                228.90599628
+ One electron energy                          -673.40597910
+ Two electron energy                           259.62910917
+ Virial ratio                                    2.00228515
+ 
+ !MCSCF STATE 1.1 Dipole moment                  0.00000000     0.00000000     0.30495220
+ Dipole moment /Debye                            0.00000000     0.00000000     0.77511119
+ 
+ No non-zero expectation values
+ 
+  NATURAL ORBITALS 
+  ================
+
+  Orbital  Occupation    Energy    Cen Mu Typ  Coefficients
+    1.1     2.00000   -11.27857     1  1  s    0.99616
+    2.1     2.00000   -11.27046     2  1  s    0.81552    4  1  s    0.57235
+    3.1     2.00000   -11.27042     2  1  s   -0.57080    4  1  s    0.82054
+    4.1     2.00000   -11.25384     5  1  s    0.99991
+    5.1     2.00000    -1.16274     1  2  s    0.37581    2  2  s    0.53696    4  2  s    0.34456    5  2  s    0.49115
+    6.1     2.00000    -1.03622     1  2  s    0.52678    2  2  s    0.31215    4  2  s   -0.48402    5  2  s   -0.38596
+    7.1     2.00000    -0.83009     1  2  s    0.34771    2  2  s   -0.26243    2  1  pz  -0.36729    4  2  s    0.48156
+                                    5  2  s   -0.27347    5  1  pz   0.35510   10  1  s    0.32676
+    8.1     2.00000    -0.69892     1  1  pz  -0.37111    5  2  s    0.26831    5  1  py   0.43099    7  1  s    0.42477
+                                    8  1  s    0.52985
+    9.1     2.00000    -0.64017     1  1  pz   0.40183    4  1  pz   0.47938    5  1  py   0.36297    7  1  s   -0.41559
+                                    8  1  s    0.26941   10  1  s    0.44603
+   10.1     2.00000    -0.55572     1  1  pz   0.31127    2  1  pz  -0.40832    4  1  pz  -0.40004    5  1  pz   0.49790
+                                    7  1  s   -0.28249    8  1  s    0.33493   10  1  s   -0.45361
+   11.1     1.63863    -0.26658     2  2  s    0.42393    2  1  pz  -0.41881    2  1  py   0.69617
+    1.2     2.00000    -0.51525     1  1  px   0.34778    2  1  px   0.47403    4  1  px   0.30207    5  1  px   0.44949
+    2.2     2.00000    -0.35486     1  1  px   0.49920    2  1  px   0.31245    4  1  px  -0.46648    5  1  px  -0.36835
+    1.3     2.00000   -11.27046     2  1  s    1.00085
+    2.3     2.00000   -11.25388     5  1  s    1.00094
+    3.3     2.00000    -0.99039     2  2  s    0.54010    5  2  s    0.69909    8  1  s    0.26546
+    4.3     2.00000    -0.76684     1  1  py   0.39643    2  2  s    0.64300    4  1  py  -0.29639    5  2  s   -0.34126
+                                    5  1  pz  -0.34794    8  1  s   -0.30392
+    5.3     2.00000    -0.61827     1  1  py  -0.45315    2  1  pz   0.59033    4  1  py  -0.34428    5  1  pz  -0.53502
+    6.3     2.00000    -0.54957     4  1  py  -0.44000    5  1  py   0.68366    8  1  s    0.61716
+    7.3     0.36137     0.02409     1  1  py  -0.30553    2  1  py   0.97770    2  1  pz  -0.34027
+    1.4     2.00000    -0.33695     2  1  px   0.56819    5  1  px   0.63574
+ 
+ Natural orbital dump at molpro section 2140.2 (Orbital set 2)
+
+
+ **********************************************************************************************************************************
+ DATASETS  * FILE   NREC   LENGTH (MB)   RECORD NAMES
+              1      20       57.71       500      610      700      900      950      970     1000      129      960     1100   
+                                          VAR    BASINP    GEOM    SYMINP    ZMAT    AOBASIS   BASIS     P2S    ABASIS      S 
+                                         1400     1410     1200     1210     1080     1600     1650     1300     1700     1380   
+                                           T        V       H0       H01     AOSYM     SMH    MOLCAS    ERIS     OPER     JKOP   
+
+              2       4        0.60       700     1000      520     2140   
+                                         GEOM     BASIS   MCVARS    MCSCF   
+
+ PROGRAMS   *        TOTAL    CASSCF       INT
+ CPU TIMES  *         2.08      0.59      1.35
+ REAL TIME  *         3.70 SEC
+ DISK USED  *       101.94 MB
+ **********************************************************************************************************************************
+
+ DO I                   =         1.00000000   
+
+
+ PROGRAM * CMRCC (Interface to GeCCo)          Authors: M. Hanauer and A. Koehn (2012)
+                                                  contributing authors: Y. A. Aoto, A. Bargholz, J. Black, P. K. Samanta 
+                                interface and density fitted integrals: D. J. Coughtrie (2017)
+
+ CALL NAME for this CMRCC calculation = 1
+
+ Reference energy read from record     2140.2     Type=MCSCF
+
+
+ Number of core orbitals:             6 (    4    0    2    0 )
+ Number of inactive orbitals:        13 (    6    2    4    1 )
+ Number of active orbitals:           2 (    1    0    1    0 )
+ Number of virtual orbitals:         83 (   33   15   25   10 )
+
+          electrons = 40
+       wfu symmetry = 1
+   molecular charge = 0
+ unpaired electrons = 0
+       target state = 1
+
+ Generating transformed integrals
+
+
+ Molecular orbitals read from record     2140.2  Type=MCSCF/NATURAL (state 1.1)
+
+ Frozen orbitals:              6 (  4  0  2  0  0  0  0  0)
+ Active orbitals:             98 ( 40 17 30 11  0  0  0  0)
+ Active electrons:            28
+ Spin quantum number:          0.0
+
+ Load integrals                2.3 sec
+ Transform integrals           2.4 sec
+
+ Calling GeCCo program ...
+
+ gecco executable:   /home/st/st_us-031110/st_ac131646/Git/GeCCo/bin/x86_64-linux-gnu-ifort/gecco.x
+
+ ***** NEW GECCO INPUT FILE *****
+
+ gecco input::       mrccsd.inp
+ scratch files go to /scratch/st_ac131646.5251405/molpro.JTJxslT9M3/CMRCC-1/
+ temporary output in /lustre/home/st/st_us-031110/st_ac131646/projects/icMRCC-paper/m-benzyne/m-benzyne_singlett_cc-pVDZ_22ge_relaxed/m-benzyne_singlett_cc-pVDZ_22ge_relaxed-J2-5251405-mrccsd-1.out
+                 and /lustre/home/st/st_us-031110/st_ac131646/projects/icMRCC-paper/m-benzyne/m-benzyne_singlett_cc-pVDZ_22ge_relaxed/m-benzyne_singlett_cc-pVDZ_22ge_relaxed-J2-5251405-mrccsd-1.log
+
+ GeCCo will use these orbital spaces:
+  core         4   0   2   0
+  inactive     6   2   4   1
+  active       1   0   1   0
+  virtual     33  15  25  10
+ +-----------------------------------------------------------------------------+
+ method
+ MR maxexc=2
+ MR excrestr=(0,0,1,1,1,1)
+ MR excrestr=(1,1,0,0,1,1)
+ MRCC maxcom_en=2,maxcom_res=2
+ calculate
+ solve maxiter=50,maxsub=8,conv=0.1E-07
+ routes maxbranch=4,sv_thresh=0.1E-06,auto_opt=T,spinadapt=3
+ +-----------------------------------------------------------------------------+
+ Now solving equations for reference state
+
+ ITER.    TOTAL ENERGY    ENERGY CHANGE     RES         TIME    TIME/IT
+   1     -229.34186608   -229.34186608    0.19D+00      9.47       9.47
+   2     -229.42907999     -0.08721391    0.00D+00      9.47       9.47
+
+ Spin expectation value <C0| S^2 |C0> :      0.000000000000
+ Reference energy :   -229.429079992805
+
+ Summary of cluster operator dimensions:
+
+    Name      Excitation                 Size
+    I1          V,H                        20
+    I2          VV,HH                     270
+    S0          P,V                       116
+    S1          P,H                       676
+    S1          PV,HV                    7860
+    S2          PV,HH                   22712
+    P0          PP,VV                    9928
+    P1          PP,HV                  144940
+    P2          PP,HH                  442095
+
+ Total number of elements:             628617
+
+
+ ITER.  NCI    TOTAL ENERGY    ENERGY CHANGE     RES       NSV    SV MIN     SV MAX    DIIS      TIME    TIME/IT
+   1      0   -229.42907999   -229.42907999    0.15D+01     24   0.18D+00   0.44D-15     1      26.55      26.55
+   2      2   -230.17166931     -0.74258932    0.25D+00     24   0.12D+00   0.45D-15     2      68.58      34.29
+   3      1   -230.17571813     -0.00404882    0.81D-01     24   0.12D+00   0.45D-15     3     110.53      36.84
+   4      2   -230.20151008     -0.02579195    0.27D-01     24   0.11D+00   0.58D-15     4     152.65      38.16
+   5      2   -230.20617721     -0.00466713    0.10D-01     24   0.11D+00   0.61D-15     5     194.83      38.97
+   6      2   -230.20641750     -0.00024029    0.37D-02     24   0.11D+00   0.70D-15     6     237.01      39.50
+   7      2   -230.20644386     -0.00002636    0.14D-02     24   0.11D+00   0.11D-14     7     279.17      39.88
+   8      2   -230.20648994     -0.00004608    0.52D-03     24   0.11D+00   0.98D-15     8     321.36      40.17
+   9      2   -230.20647744      0.00001250    0.21D-03     24   0.11D+00   0.13D-14     8     363.49      40.39
+  10      2   -230.20647754     -0.00000010    0.86D-04     24   0.11D+00   0.13D-14     8     405.58      40.56
+  11      2   -230.20648053     -0.00000299    0.33D-04     24   0.11D+00   0.16D-14     8     447.72      40.70
+  12      2   -230.20647649      0.00000404    0.12D-04     24   0.11D+00   0.10D-14     8     489.78      40.81
+  13      2   -230.20647680     -0.00000031    0.48D-05     24   0.11D+00   0.13D-14     8     531.82      40.91
+  14      2   -230.20647628      0.00000052    0.19D-05     24   0.11D+00   0.18D-14     8     573.95      41.00
+  15      2   -230.20647627      0.00000001    0.85D-06     24   0.11D+00   0.16D-14     8     616.04      41.07
+  16      2   -230.20647632     -0.00000005    0.37D-06     24   0.11D+00   0.17D-14     8     658.11      41.13
+  17      2   -230.20647632     -0.00000001    0.14D-06     24   0.11D+00   0.18D-14     8     700.15      41.19
+  18      1   -230.20647633     -0.00000001    0.57D-07     24   0.11D+00   0.18D-14     8     742.05      41.22
+  19      1   -230.20647633     -0.00000000    0.22D-07     24   0.11D+00   0.18D-14     8     784.03      41.26
+  20      1   -230.20647633      0.00000000    0.96D-08     24   0.11D+00   0.18D-14     8     826.08      41.30
+
+    CONVERGED
+
+ Spin expectation value <C0| S^2 |C0> :      0.000000000000
+ Final icMRCC energy:   -230.206476330826
+ +----------------------------------------------------------------------------+
+   Maximum allocated memory:     3602092816 real(8)-words (  27481.79 Mb)
+   Largest memory block:         3598672051 real(8)-words (  27455.69 Mb)
+   Name of largest block:    contr1.contr_scr
+ +----------------------------------------------------------------------------+
+ icMRCCSD(T) restart files will not be saved
+ icMRCCSD restart files will not be saved
+
+ Elapsed-time for CMRCC:       896.1 sec
+
+ Variable memory set to 4000.0 MW
+
+
+
+  RESULTS
+  =======
+
+ Molpro reference energy =    -0.4137768699E+03
+ GeCCo reference energy from input file 1 (mrccsd.inp) =    -0.2294290800E+03
+ ? Warning
+ ? Reference energies from GeCCo and Molpro differ!
+ ? The problem occurs in CMRCC
+
+
+ Reference energy                    -229.42907999
+
+ Correlation energy                    -0.77739634
+ !icMRCCSD STATE 1.1 Energy          -230.206476330826
+
+
+
+ **********************************************************************************************************************************
+ DATASETS  * FILE   NREC   LENGTH (MB)   RECORD NAMES
+              1      20       57.71       500      610      700      900      950      970     1000      129      960     1100   
+                                          VAR    BASINP    GEOM    SYMINP    ZMAT    AOBASIS   BASIS     P2S    ABASIS      S 
+                                         1400     1410     1200     1210     1080     1600     1650     1300     1700     1380   
+                                           T        V       H0       H01     AOSYM     SMH    MOLCAS    ERIS     OPER     JKOP   
+
+              2       4        0.60       700     1000      520     2140   
+                                         GEOM     BASIS   MCVARS    MCSCF   
+
+ PROGRAMS   *        TOTAL     CMRCC    CASSCF       INT
+ CPU TIMES  *       900.15    898.07      0.59      1.35
+ REAL TIME  *       902.03 SEC
+ DISK USED  *       101.94 MB
+ **********************************************************************************************************************************
+
+ DO I                   =         2.00000000   
+
+
+ PROGRAM * CMRCC (Interface to GeCCo)          Authors: M. Hanauer and A. Koehn (2012)
+                                                  contributing authors: Y. A. Aoto, A. Bargholz, J. Black, P. K. Samanta 
+                                interface and density fitted integrals: D. J. Coughtrie (2017)
+
+ CALL NAME for this CMRCC calculation = 2
+
+ Reference energy read from record     2140.2     Type=MCSCF
+
+
+ Number of core orbitals:             6 (    4    0    2    0 )
+ Number of inactive orbitals:        13 (    6    2    4    1 )
+ Number of active orbitals:           2 (    1    0    1    0 )
+ Number of virtual orbitals:         83 (   33   15   25   10 )
+
+          electrons = 40
+       wfu symmetry = 1
+   molecular charge = 0
+ unpaired electrons = 0
+       target state = 1
+
+ Generating transformed integrals
+
+
+ Molecular orbitals read from record     2140.2  Type=MCSCF/NATURAL (state 1.1)
+
+ Frozen orbitals:              6 (  4  0  2  0  0  0  0  0)
+ Active orbitals:             98 ( 40 17 30 11  0  0  0  0)
+ Active electrons:            28
+ Spin quantum number:          0.0
+
+ Load integrals                4.2 sec
+ Transform integrals           4.3 sec
+
+ Calling GeCCo program ...
+
+ gecco executable:   /home/st/st_us-031110/st_ac131646/Git/GeCCo/bin/x86_64-linux-gnu-ifort/gecco.x
+
+ ***** NEW GECCO INPUT FILE *****
+
+ gecco input::       mrccsd.inp
+ scratch files go to /scratch/st_ac131646.5251405/molpro.JTJxslT9M3/CMRCC-2/
+ temporary output in /lustre/home/st/st_us-031110/st_ac131646/projects/icMRCC-paper/m-benzyne/m-benzyne_singlett_cc-pVDZ_22ge_relaxed/m-benzyne_singlett_cc-pVDZ_22ge_relaxed-J2-5251405-mrccsd-2.out
+                 and /lustre/home/st/st_us-031110/st_ac131646/projects/icMRCC-paper/m-benzyne/m-benzyne_singlett_cc-pVDZ_22ge_relaxed/m-benzyne_singlett_cc-pVDZ_22ge_relaxed-J2-5251405-mrccsd-2.log
+
+ GeCCo will use these orbital spaces:
+  core         4   0   2   0
+  inactive     6   2   4   1
+  active       1   0   1   0
+  virtual     33  15  25  10
+ +-----------------------------------------------------------------------------+
+ method
+ MR maxexc=2
+ MR excrestr=(0,0,1,1,1,1)
+ MR excrestr=(1,1,0,0,1,1)
+ MRCC maxcom_en=2,maxcom_res=2
+ calculate
+ solve maxiter=50,maxsub=8,conv=0.1E-07
+ routes maxbranch=4,sv_thresh=0.1E-06,auto_opt=T,spinadapt=3
+ +-----------------------------------------------------------------------------+
+ Now solving equations for reference state
+
+ ITER.    TOTAL ENERGY    ENERGY CHANGE     RES         TIME    TIME/IT
+   1     -229.34186608   -229.34186608    0.19D+00      9.46       9.46
+   2     -229.42907999     -0.08721391    0.00D+00      9.46       9.46
+
+ Spin expectation value <C0| S^2 |C0> :      0.000000000000
+ Reference energy :   -229.429079992805
+
+ Summary of cluster operator dimensions:
+
+    Name      Excitation                 Size
+    I1          V,H                        20
+    I2          VV,HH                     270
+    S0          P,V                       116
+    S1          P,H                       676
+    S1          PV,HV                    7860
+    S2          PV,HH                   22712
+    P0          PP,VV                    9928
+    P1          PP,HV                  144940
+    P2          PP,HH                  442095
+
+ Total number of elements:             628617
+
+
+ ITER.  NCI    TOTAL ENERGY    ENERGY CHANGE     RES       NSV    SV MIN     SV MAX    DIIS      TIME    TIME/IT
+   1      0   -229.42907999   -229.42907999    0.15D+01     24   0.18D+00   0.44D-15     1      26.45      26.45
+   2      2   -230.17166931     -0.74258932    0.25D+00     24   0.12D+00   0.45D-15     2      68.43      34.22
+   3      1   -230.17571813     -0.00404882    0.81D-01     24   0.12D+00   0.45D-15     3     110.44      36.81
+   4      2   -230.20151008     -0.02579195    0.27D-01     24   0.11D+00   0.58D-15     4     152.50      38.12
+   5      2   -230.20617721     -0.00466713    0.10D-01     24   0.11D+00   0.61D-15     5     194.61      38.92
+   6      2   -230.20641750     -0.00024029    0.37D-02     24   0.11D+00   0.70D-15     6     236.81      39.47
+   7      2   -230.20644386     -0.00002636    0.14D-02     24   0.11D+00   0.11D-14     7     279.00      39.86
+   8      2   -230.20648994     -0.00004608    0.52D-03     24   0.11D+00   0.98D-15     8     321.15      40.14
+   9      2   -230.20647744      0.00001250    0.21D-03     24   0.11D+00   0.13D-14     8     363.30      40.37
+  10      2   -230.20647754     -0.00000010    0.86D-04     24   0.11D+00   0.13D-14     8     405.43      40.54
+  11      2   -230.20648053     -0.00000299    0.33D-04     24   0.11D+00   0.16D-14     8     447.58      40.69
+  12      2   -230.20647649      0.00000404    0.12D-04     24   0.11D+00   0.10D-14     8     489.75      40.81
+  13      2   -230.20647680     -0.00000031    0.48D-05     24   0.11D+00   0.13D-14     8     531.89      40.91
+  14      2   -230.20647628      0.00000052    0.19D-05     24   0.11D+00   0.18D-14     8     573.89      40.99
+  15      2   -230.20647627      0.00000001    0.85D-06     24   0.11D+00   0.16D-14     8     616.00      41.07
+  16      2   -230.20647632     -0.00000005    0.37D-06     24   0.11D+00   0.17D-14     8     658.06      41.13
+  17      2   -230.20647632     -0.00000001    0.14D-06     24   0.11D+00   0.18D-14     8     700.02      41.18
+  18      1   -230.20647633     -0.00000001    0.57D-07     24   0.11D+00   0.18D-14     8     741.94      41.22
+  19      1   -230.20647633     -0.00000000    0.22D-07     24   0.11D+00   0.18D-14     8     783.96      41.26
+  20      1   -230.20647633      0.00000000    0.96D-08     24   0.11D+00   0.18D-14     8     825.97      41.30
+
+    CONVERGED
+
+ Spin expectation value <C0| S^2 |C0> :      0.000000000000
+ Final icMRCC energy:   -230.206476330826
+ +----------------------------------------------------------------------------+
+   Maximum allocated memory:     3602092816 real(8)-words (  27481.79 Mb)
+   Largest memory block:         3598672051 real(8)-words (  27455.69 Mb)
+   Name of largest block:    contr1.contr_scr
+ +----------------------------------------------------------------------------+
+ icMRCCSD(T) restart files will not be saved
+ icMRCCSD restart files will not be saved
+
+ Elapsed-time for CMRCC:       895.6 sec
+
+ Variable memory set to 4000.0 MW
+
+
+
+  RESULTS
+  =======
+
+ Molpro reference energy =    -0.4137768699E+03
+ GeCCo reference energy from input file 1 (mrccsd.inp) =    -0.2294290800E+03
+ ? Warning
+ ? Reference energies from GeCCo and Molpro differ!
+ ? The problem occurs in CMRCC
+
+
+ Reference energy                    -229.42907999
+
+ Correlation energy                    -0.77739634
+ !icMRCCSD STATE 1.1 Energy          -230.206476330826
+
+
+
+ **********************************************************************************************************************************
+ DATASETS  * FILE   NREC   LENGTH (MB)   RECORD NAMES
+              1      20       57.71       500      610      700      900      950      970     1000      129      960     1100   
+                                          VAR    BASINP    GEOM    SYMINP    ZMAT    AOBASIS   BASIS     P2S    ABASIS      S 
+                                         1400     1410     1200     1210     1080     1600     1650     1300     1700     1380   
+                                           T        V       H0       H01     AOSYM     SMH    MOLCAS    ERIS     OPER     JKOP   
+
+              2       4        0.60       700     1000      520     2140   
+                                         GEOM     BASIS   MCVARS    MCSCF   
+
+ PROGRAMS   *        TOTAL     CMRCC     CMRCC    CASSCF       INT
+ CPU TIMES  *      1797.76    897.61    898.07      0.59      1.35
+ REAL TIME  *      1799.91 SEC
+ DISK USED  *       101.94 MB
+ **********************************************************************************************************************************
+
+ DO I                   =         3.00000000   
+
+
+ PROGRAM * CMRCC (Interface to GeCCo)          Authors: M. Hanauer and A. Koehn (2012)
+                                                  contributing authors: Y. A. Aoto, A. Bargholz, J. Black, P. K. Samanta 
+                                interface and density fitted integrals: D. J. Coughtrie (2017)
+
+ CALL NAME for this CMRCC calculation = 3
+
+ Reference energy read from record     2140.2     Type=MCSCF
+
+
+ Number of core orbitals:             6 (    4    0    2    0 )
+ Number of inactive orbitals:        13 (    6    2    4    1 )
+ Number of active orbitals:           2 (    1    0    1    0 )
+ Number of virtual orbitals:         83 (   33   15   25   10 )
+
+          electrons = 40
+       wfu symmetry = 1
+   molecular charge = 0
+ unpaired electrons = 0
+       target state = 1
+
+ Generating transformed integrals
+
+
+ Molecular orbitals read from record     2140.2  Type=MCSCF/NATURAL (state 1.1)
+
+ Frozen orbitals:              6 (  4  0  2  0  0  0  0  0)
+ Active orbitals:             98 ( 40 17 30 11  0  0  0  0)
+ Active electrons:            28
+ Spin quantum number:          0.0
+
+ Load integrals                6.2 sec
+ Transform integrals           6.3 sec
+
+ Calling GeCCo program ...
+
+ gecco executable:   /home/st/st_us-031110/st_ac131646/Git/GeCCo/bin/x86_64-linux-gnu-ifort/gecco.x
+
+ ***** NEW GECCO INPUT FILE *****
+
+ gecco input::       mrccsd.inp
+ scratch files go to /scratch/st_ac131646.5251405/molpro.JTJxslT9M3/CMRCC-3/
+ temporary output in /lustre/home/st/st_us-031110/st_ac131646/projects/icMRCC-paper/m-benzyne/m-benzyne_singlett_cc-pVDZ_22ge_relaxed/m-benzyne_singlett_cc-pVDZ_22ge_relaxed-J2-5251405-mrccsd-3.out
+                 and /lustre/home/st/st_us-031110/st_ac131646/projects/icMRCC-paper/m-benzyne/m-benzyne_singlett_cc-pVDZ_22ge_relaxed/m-benzyne_singlett_cc-pVDZ_22ge_relaxed-J2-5251405-mrccsd-3.log
+
+ GeCCo will use these orbital spaces:
+  core         4   0   2   0
+  inactive     6   2   4   1
+  active       1   0   1   0
+  virtual     33  15  25  10
+ +-----------------------------------------------------------------------------+
+ method
+ MR maxexc=2
+ MR excrestr=(0,0,1,1,1,1)
+ MR excrestr=(1,1,0,0,1,1)
+ MRCC maxcom_en=2,maxcom_res=2
+ calculate
+ solve maxiter=50,maxsub=8,conv=0.1E-07
+ routes maxbranch=4,sv_thresh=0.1E-06,auto_opt=T,spinadapt=3
+ +-----------------------------------------------------------------------------+
+ Now solving equations for reference state
+
+ ITER.    TOTAL ENERGY    ENERGY CHANGE     RES         TIME    TIME/IT
+   1     -229.34186608   -229.34186608    0.19D+00      9.37       9.37
+   2     -229.42907999     -0.08721391    0.00D+00      9.38       9.38
+
+ Spin expectation value <C0| S^2 |C0> :      0.000000000000
+ Reference energy :   -229.429079992805
+
+ Summary of cluster operator dimensions:
+
+    Name      Excitation                 Size
+    I1          V,H                        20
+    I2          VV,HH                     270
+    S0          P,V                       116
+    S1          P,H                       676
+    S1          PV,HV                    7860
+    S2          PV,HH                   22712
+    P0          PP,VV                    9928
+    P1          PP,HV                  144940
+    P2          PP,HH                  442095
+
+ Total number of elements:             628617
+
+
+ ITER.  NCI    TOTAL ENERGY    ENERGY CHANGE     RES       NSV    SV MIN     SV MAX    DIIS      TIME    TIME/IT
+   1      0   -229.42907999   -229.42907999    0.15D+01     24   0.18D+00   0.44D-15     1      26.40      26.40
+   2      2   -230.17166931     -0.74258932    0.25D+00     24   0.12D+00   0.45D-15     2      68.34      34.17
+   3      1   -230.17571813     -0.00404882    0.81D-01     24   0.12D+00   0.45D-15     3     110.17      36.72
+   4      2   -230.20151008     -0.02579195    0.27D-01     24   0.11D+00   0.58D-15     4     152.13      38.03
+   5      2   -230.20617721     -0.00466713    0.10D-01     24   0.11D+00   0.61D-15     5     194.08      38.82
+   6      2   -230.20641750     -0.00024029    0.37D-02     24   0.11D+00   0.70D-15     6     236.04      39.34
+   7      2   -230.20644386     -0.00002636    0.14D-02     24   0.11D+00   0.11D-14     7     278.06      39.72
+   8      2   -230.20648994     -0.00004608    0.52D-03     24   0.11D+00   0.98D-15     8     319.95      39.99
+   9      2   -230.20647744      0.00001250    0.21D-03     24   0.11D+00   0.13D-14     8     362.04      40.23
+  10      2   -230.20647754     -0.00000010    0.86D-04     24   0.11D+00   0.13D-14     8     403.97      40.40
+  11      2   -230.20648053     -0.00000299    0.33D-04     24   0.11D+00   0.16D-14     8     445.88      40.53
+  12      2   -230.20647649      0.00000404    0.12D-04     24   0.11D+00   0.10D-14     8     487.87      40.66
+  13      2   -230.20647680     -0.00000031    0.48D-05     24   0.11D+00   0.13D-14     8     529.87      40.76
+  14      2   -230.20647628      0.00000052    0.19D-05     24   0.11D+00   0.18D-14     8     571.82      40.84
+  15      2   -230.20647627      0.00000001    0.85D-06     24   0.11D+00   0.16D-14     8     613.78      40.92
+  16      2   -230.20647632     -0.00000005    0.37D-06     24   0.11D+00   0.17D-14     8     655.69      40.98
+  17      2   -230.20647632     -0.00000001    0.14D-06     24   0.11D+00   0.18D-14     8     697.76      41.04
+  18      1   -230.20647633     -0.00000001    0.57D-07     24   0.11D+00   0.18D-14     8     739.64      41.09
+  19      1   -230.20647633     -0.00000000    0.22D-07     24   0.11D+00   0.18D-14     8     781.50      41.13
+  20      1   -230.20647633      0.00000000    0.96D-08     24   0.11D+00   0.18D-14     8     823.47      41.17
+
+    CONVERGED
+
+ Spin expectation value <C0| S^2 |C0> :      0.000000000000
+ Final icMRCC energy:   -230.206476330826
+ +----------------------------------------------------------------------------+
+   Maximum allocated memory:     3602092816 real(8)-words (  27481.79 Mb)
+   Largest memory block:         3598672051 real(8)-words (  27455.69 Mb)
+   Name of largest block:    contr1.contr_scr
+ +----------------------------------------------------------------------------+
+ icMRCCSD(T) restart files will not be saved
+ icMRCCSD restart files will not be saved
+
+ Elapsed-time for CMRCC:       889.8 sec
+
+ Variable memory set to 4000.0 MW
+
+
+
+  RESULTS
+  =======
+
+ Molpro reference energy =    -0.4137768699E+03
+ GeCCo reference energy from input file 1 (mrccsd.inp) =    -0.2294290800E+03
+ ? Warning
+ ? Reference energies from GeCCo and Molpro differ!
+ ? The problem occurs in CMRCC
+
+
+ Reference energy                    -229.42907999
+
+ Correlation energy                    -0.77739634
+ !icMRCCSD STATE 1.1 Energy          -230.206476330826
+
+
+
+ **********************************************************************************************************************************
+ DATASETS  * FILE   NREC   LENGTH (MB)   RECORD NAMES
+              1      20       57.71       500      610      700      900      950      970     1000      129      960     1100   
+                                          VAR    BASINP    GEOM    SYMINP    ZMAT    AOBASIS   BASIS     P2S    ABASIS      S 
+                                         1400     1410     1200     1210     1080     1600     1650     1300     1700     1380   
+                                           T        V       H0       H01     AOSYM     SMH    MOLCAS    ERIS     OPER     JKOP   
+
+              2       4        0.60       700     1000      520     2140   
+                                         GEOM     BASIS   MCVARS    MCSCF   
+
+ PROGRAMS   *        TOTAL     CMRCC     CMRCC     CMRCC    CASSCF       INT
+ CPU TIMES  *      2689.57    891.81    897.61    898.07      0.59      1.35
+ REAL TIME  *      2692.01 SEC
+ DISK USED  *       101.94 MB
+ **********************************************************************************************************************************
+
+ icMRCCSD/cc-pVDZ energy=   -230.206476330826
+
+           CMRCC          CASSCF
+   -230.20647633   -229.42907999
+ **********************************************************************************************************************************
+ Molpro calculation terminated with 3 warning(s)
