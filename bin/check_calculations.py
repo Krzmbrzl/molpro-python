@@ -11,6 +11,13 @@ class State(Enum):
     PENDING = 2
     ERROR = 3
 
+# https://stackoverflow.com/a/27265453
+NO_COLOR = "\033[0m"
+RED = "\033[31m"
+GREEN = "\033[32m"
+ORANGE = "\033[33m"
+BLUE = "\033[34m"
+PURPLE = "\033[35m"
 
 def processFile(path):
     parser = OutputFileParser()
@@ -25,11 +32,11 @@ def processFile(path):
 def printStatus(path: str, state: State, indent: str = ""):
     msg = indent
     if state == State.OK:
-        msg += "\033[32m" + "OK" + "\033[0m"
+        msg += GREEN + "OK" + NO_COLOR
     elif state == State.PENDING:
-        msg += "PENDING"
+        msg += BLUE + "PENDING" + NO_COLOR
     elif state == State.ERROR:
-        msg += "\033[31m" + "ERROR" + "\033[0m"
+        msg += RED + "ERROR" + NO_COLOR
 
     msg += ": " + path
 
