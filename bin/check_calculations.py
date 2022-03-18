@@ -11,7 +11,8 @@ class State(Enum):
     OK = 1
     PENDING = 2
     ERROR = 3
-    INVALID = 4
+    WARNING = 4
+    INVALID = 5
 
 # https://stackoverflow.com/a/27265453
 NO_COLOR = "\033[0m"
@@ -29,6 +30,8 @@ def processFile(path):
 
         if len(output.errors) > 0:
             return State.ERROR
+        if len(output.warnings) > 0:
+            return State.WARNING
 
         return State.OK if output.calculation_finished else State.PENDING
     except MolproError:
@@ -43,6 +46,8 @@ def printStatus(path: str, state: State, indent: str = ""):
         msg += BLUE + "PENDING" + NO_COLOR
     elif state == State.ERROR:
         msg += RED + "ERROR" + NO_COLOR
+    elif state == State.WARNING:
+        msg += ORANGE + "WARNING" + NO_COLOR
     elif state == State.INVALID:
         msg += PURPLE + "INALID" + NO_COLOR
 

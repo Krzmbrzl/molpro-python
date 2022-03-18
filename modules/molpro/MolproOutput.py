@@ -17,6 +17,7 @@ class MolproOutput:
         self.input_definition: Optional[str] = None
 
         self.errors: List[str] = []
+        self.warnings: List[str] = []
 
         self.version: Optional[str] = None
         self.version_hash: Optional[str] = None

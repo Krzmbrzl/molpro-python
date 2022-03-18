@@ -1,3 +1,4 @@
+from typing import List
 import logging
 
 import molpro
@@ -37,6 +38,7 @@ class OutputFileParser:
             # Close file, in case we opened it
             if not file is None:
                 file.close()
+
 
     def __doParse(self, content: str, parse_details: bool = True) -> MolproOutput:
         output = MolproOutput()
@@ -165,8 +167,9 @@ class OutputFileParser:
                 # Start the new interval
                 currentIntervalStart = i
             elif lines[i].startswith("?"):
-                # Lines starting with question marks represent error messages
-                output.errors.append(lines[i][1:].strip())
+                newIndex = self.__processErrorOrWarning(lines, i, output)
+                while i < newIndex:
+                    i = next(lineIt)
             elif lines[i].startswith("GLOBAL ERROR"):
                 output.errors.append(lines[i])
 
@@ -207,3 +210,20 @@ class OutputFileParser:
         output.calculation_finished = lines[-1] == "Molpro calculation terminated"
 
         return output
+
+
+    def __processErrorOrWarning(self, lines: List[str], index: int, output: MolproOutput):
+        severity = utils.consume(lines[index], prefix="?", strip=True)
+        index += 1
+        message = utils.consume(lines[index], prefix="?", strip=True)
+        index += 1
+        location = utils.consume(lines[index], prefix="The problem occurs in", strip=True)
+
+        completeMsg = message + " (in " + location + ")"
+
+        if severity.lower() == "warning":
+            output.warnings.append(completeMsg)
+        else:
+            output.errors.append(completeMsg)
+
+        return index
