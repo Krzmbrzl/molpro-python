@@ -217,7 +217,8 @@ class OutputFileParser:
         index += 1
         message = utils.consume(lines[index], prefix="?", strip=True)
         index += 1
-        location = utils.consume(lines[index], prefix="The problem occurs in", strip=True)
+        location = utils.consume(lines[index], prefix="?", strip=True)
+        location = utils.consume(location, prefix="The problem occurs in", strip=True)
 
         completeMsg = message + " (in " + location + ")"
 
