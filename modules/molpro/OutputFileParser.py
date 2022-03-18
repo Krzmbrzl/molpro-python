@@ -167,6 +167,8 @@ class OutputFileParser:
             elif lines[i].startswith("?"):
                 # Lines starting with question marks represent error messages
                 output.errors.append(lines[i][1:].strip())
+            elif lines[i].startswith("GLOBAL ERROR"):
+                output.errors.append(lines[i])
 
         if currentIntervalStart < 0:
             raise OutputFormatError(
