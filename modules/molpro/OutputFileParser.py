@@ -2,6 +2,7 @@ from typing import List
 import logging
 
 import molpro
+from molpro import MolproError
 from molpro import OutputFormatError
 from molpro import MolproOutput
 from molpro import Node
@@ -167,9 +168,13 @@ class OutputFileParser:
                 # Start the new interval
                 currentIntervalStart = i
             elif lines[i].startswith("?"):
-                newIndex = self.__processErrorOrWarning(lines, i, output)
-                while i < newIndex:
-                    i = next(lineIt)
+                try:
+                    newIndex = self.__processErrorOrWarning(lines, i, output)
+                    while i < newIndex:
+                        i = next(lineIt)
+                except MolproError:
+                    # The __processErrorOrWarning function has failed -> Assume that this is an error in non-standard format then
+                    output.errors.append(lines[i][1 : ].strip())
             elif lines[i].startswith("GLOBAL ERROR"):
                 output.errors.append(lines[i])
 
