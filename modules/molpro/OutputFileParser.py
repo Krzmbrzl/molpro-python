@@ -228,13 +228,18 @@ class OutputFileParser:
                         self.output.program_outputs.append(parsedOutput)
 
     def __processErrorOrWarning(self, lines: List[str], index: int) -> int:
-        severity = utils.consume(lines[index], prefix="?", strip=True)
-        index += 1
-        message = utils.consume(lines[index], prefix="?", strip=True)
-        index += 1
-        location = utils.consume(lines[index], prefix="?", strip=True)
-        location = utils.consume(
-            location, prefix="The problem occurs in", strip=True)
+        try:
+            severity = utils.consume(lines[index], prefix="?", strip=True)
+            index += 1
+            message = utils.consume(lines[index], prefix="?", strip=True)
+            index += 1
+            location = utils.consume(lines[index], prefix="?", strip=True)
+            location = utils.consume(
+                location, prefix="The problem occurs in", strip=True)
+        except IndexError:
+            # If we run into an IndexError, that means we have encountered an EOF in the middle of an error/warning
+            # message block. Propagate this as if we ran into EOF using an iterator
+            raise StopIteration()
 
         completeMsg = message + " (in " + location + ")"
 
