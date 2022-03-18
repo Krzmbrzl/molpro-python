@@ -45,7 +45,7 @@ class MULTI_Parser:
         i = utils.skip_to(lines, i, startswith="Number of CSFs")
         assert i < end
 
-        data.number_of_csfs = int(utils.consume(lines[i], prefix="Number of CSFs:", gobble_from="(", strip=True))
+        data.number_of_csfs = int(utils.consume(lines[i], prefix="Number of CSFs:", gobble_from="(", strip=True, optional_ops=["gobble_from"]))
 
         # Skip to actual iterations
         i = utils.skip_to(lines, i, startswith="ITER")
@@ -53,7 +53,7 @@ class MULTI_Parser:
 
         # Skip over iterations
         while i < end:
-            if lines[i] != "":
+            if lines[i] == "":
                 break
             
             i += 1
