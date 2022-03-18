@@ -1,5 +1,6 @@
 #!/usr/bin/env python 3
 
+import traceback
 import unittest
 import json
 import os
@@ -49,6 +50,7 @@ class TestGeneric(unittest.TestCase):
                 try:
                     parser.parse(contentToTest)
                 except Exception as e:
+                    print(traceback.print_exc())
                     self.fail("Parsing of the first %d lines of file \"%s\" raised exception: %s" % (i, currentFile, e))
 
 
