@@ -42,6 +42,10 @@ class OutputFileParser:
         output = MolproOutput()
 
         lines = [x.strip() for x in content.split("\n")]
+        # Remove trailing blank lines
+        while len(lines) > 0 and lines[-1] == "":
+            lines.pop()
+
 
         lineIt = iter(range(len(lines)))
         # Skip leading blank lines
