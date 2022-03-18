@@ -3,6 +3,7 @@ from typing import List
 from typing import Dict
 
 from molpro import Node
+from molpro import Program
 
 
 class MolproOutput:
@@ -28,5 +29,4 @@ class MolproOutput:
 
         self.point_group: Optional[str] = None
 
-        # TODO: Use superclass for outputs
-        self.program_outputs: List[object] = []
+        self.programs: List[Program] = []

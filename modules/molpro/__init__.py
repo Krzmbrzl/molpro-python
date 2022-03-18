@@ -1,6 +1,7 @@
 from molpro.Node import Node
 from molpro import ProgramParser
 from molpro.ParserData import ParserData
+from molpro.Program import Program
 
 from molpro.MolproError import MolproError
 from molpro.OutputFormatError import OutputFormatError

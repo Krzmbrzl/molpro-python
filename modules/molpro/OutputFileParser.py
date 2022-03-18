@@ -8,6 +8,7 @@ from molpro import MolproOutput
 from molpro import Node
 from molpro import utils
 from molpro import ProgramParser
+from molpro import Program
 
 logger = logging.getLogger("molpro.outputfileparser")
 
@@ -16,7 +17,7 @@ class OutputFileParser:
     def __init__(self):
         self.output = MolproOutput()
 
-    def parse(self, content, parse_details: bool = True) -> MolproOutput:
+    def parse(self, content) -> MolproOutput:
         # Reset output object
         self.output = MolproOutput()
 
@@ -38,7 +39,7 @@ class OutputFileParser:
 
             # At this point we assume to have a string-type argument
             try:
-                self.__doParse(content, parse_details=parse_details)
+                self.__doParse(content)
             except StopIteration:
                 # The output was ended at an unexpected position. This could either mean that the output is from a running
                 # calculation that just hasn't produced the remaining output yet or that an error occurred and the
@@ -54,7 +55,7 @@ class OutputFileParser:
             if not file is None:
                 file.close()
 
-    def __doParse(self, content: str, parse_details: bool = True) -> None:
+    def __doParse(self, content: str) -> None:
         lines = [x.strip() for x in content.split("\n")]
         # Remove trailing blank lines
         while len(lines) > 0 and lines[-1] == "":
@@ -164,18 +165,18 @@ class OutputFileParser:
 
         # Iterate over the different program parts and parse them using the dedicated parsers
         lineIt = iter(range(utils.skip_to(lines, lineIt,
-                      startswith="PROGRAM *"), len(lines)))
+                      startswith="PROGRAM *", case_sensitive=False), len(lines)))
 
         programOutputIntervals = []
         currentIntervalStart = -1
 
         for i in lineIt:
-            if lines[i].startswith("PROGRAM *"):
+            if lines[i].lower().startswith("program *"):
                 # Begin of new program output
                 if currentIntervalStart >= 0:
                     # There has been a previous interval -> finish it
                     programOutputIntervals.append(
-                        (currentIntervalStart, i - 1))
+                        (currentIntervalStart, i))
                 # Start the new interval
                 currentIntervalStart = i
             elif lines[i].startswith("?"):
@@ -198,34 +199,51 @@ class OutputFileParser:
 
         self.output.calculation_finished = lines[-1] == "Molpro calculation terminated"
 
-        if parse_details:
-            # Iterate over and parse individual program blocks
-            for begin, end in programOutputIntervals:
-                programSpec = utils.consume(
-                    lines[begin], prefix="PROGRAM *", gobble_after=")", strip=True)
+        # Iterate over and parse individual program blocks
+        for i in range(len(programOutputIntervals)):
+            begin, end = programOutputIntervals[i]
 
-                index = programSpec.find("(")
+            programSpec = utils.consume(
+                    lines[begin], prefix="PROGRAM *", gobble_after=")", strip=True, case_sensitive=False, optional_ops=["gobble_after"])
+
+            index = programSpec.find("(")
+            if index < 0:
+                # If no parenthesis are present, then assume that everything is the name and no description is given
+                programName = programSpec.strip()
+                programDescription = ""
+            else:
                 programName = programSpec[: index].strip()
                 programDescription = programSpec[index + 1: -1].strip()
 
-                if programName == "" or programDescription == "":
-                    raise OutputFormatError(
-                        "Program name and/or description in unexpected format: %s" % programSpec)
+            if programName == "":
+                raise OutputFormatError(
+                    "Program name in unexpected format: %s" % programSpec)
 
-                parserName = programName.lower() + "_parser"
-                if not parserName in ProgramParser.program_parsers:
-                    logger.warning(
-                        "Skipping output of program \"%s\" as no parser for it is available" % programName)
-                else:
-                    # Use dedicated parser to make sense of the program's output
-                    parser = ProgramParser.program_parsers[parserName]()
+            program = Program(name=programName, description=programDescription)
 
-                    subIt = iter(range(begin, end))
+            parserName = programName.lower() + "_parser"
+            if not parserName in ProgramParser.program_parsers:
+                logger.warning(
+                    "Skipping output of program \"%s\" as no parser for it is available" % programName)
+            else:
+                # Use dedicated parser to make sense of the program's output
+                parser = ProgramParser.program_parsers[parserName]()
 
+                subIt = iter(range(begin, end))
+
+                try:
                     parsedOutput = parser.parse(lines, subIt, self.output)
 
                     if not parsedOutput is None:
-                        self.output.program_outputs.append(parsedOutput)
+                        program.output = parsedOutput
+                except StopIteration:
+                    if i < len(programOutputIntervals) - 1 or self.output.calculation_finished:
+                        # Only the parsing of the last program output in an unfinished calculation may
+                        # raise a StopIteration
+                        logger.exception("Parsing the output of the \"%s\" program unexpectedly ran into EOF" % programName)
+
+            self.output.programs.append(program)
+
 
     def __processErrorOrWarning(self, lines: List[str], index: int) -> int:
         try:

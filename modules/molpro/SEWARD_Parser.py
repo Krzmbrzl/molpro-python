@@ -1,5 +1,6 @@
 from typing import List
 from typing import Iterator
+import itertools
 
 from molpro import MolproOutput
 from molpro import utils
@@ -15,11 +16,16 @@ class SEWARD_Parser:
 
     def parse(self, lines: List[str], lineIt: Iterator[int], output: MolproOutput) -> ParserData:
         data = SEWARD_Data()
+        
+        lineIt, lookaheadIt = itertools.tee(lineIt)
 
-        moleculeLine = utils.skip_to(lines, lineIt, startswith="Molecule type")
+        moleculeLine = utils.skip_to(lines, lookaheadIt, startswith="Molecule type", default=-1)
 
-        data.molecule_type = utils.consume(
-            lines[moleculeLine], prefix="Molecule type:", strip=True)
+        if moleculeLine >= 0:
+            utils.iterate_to(lineIt, moleculeLine)
+
+            data.molecule_type = utils.consume(
+                lines[moleculeLine], prefix="Molecule type:", strip=True)
 
         groupLine = utils.skip_to(lines, lineIt, startswith="Point group")
 
