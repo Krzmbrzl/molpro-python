@@ -1,20 +1,23 @@
 from typing import List
 from typing import Iterator
+from typing import Optional
 
 from molpro import MolproOutput
 from molpro import utils
 from molpro import ProgramParser
+from molpro import register_program_parser
 from molpro import ParserData
 from molpro import MULTI_Data
 from molpro import OutputFormatError
 
 
-@ProgramParser.register_program_parser
-class MULTI_Parser:
+@register_program_parser
+class MULTI_Parser(ProgramParser):
     def __init__(self):
-        pass
+        super(ProgramParser, self).__init__()
 
-    def parse(self, lines: List[str], lineIt: Iterator[int], output: MolproOutput) -> ParserData:
+
+    def parse(self, lines: List[str], lineIt: Iterator[int], output: MolproOutput) -> Optional[ParserData]:
         data = MULTI_Data()
 
         i = utils.skip_to(

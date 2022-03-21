@@ -1,4 +1,5 @@
 from typing import List
+from typing import Optional
 import logging
 import itertools
 
@@ -7,8 +8,9 @@ from molpro import OutputFormatError
 from molpro import MolproOutput
 from molpro import Node
 from molpro import utils
-from molpro import ProgramParser
+from molpro import get_program_parser
 from molpro import Program
+from molpro import ProgramParser
 
 logger = logging.getLogger("molpro.outputfileparser")
 
@@ -204,7 +206,7 @@ class OutputFileParser:
             begin, end = programOutputIntervals[i]
 
             programSpec = utils.consume(
-                    lines[begin], prefix="PROGRAM *", gobble_after=")", strip=True, case_sensitive=False, optional_ops=["gobble_after"])
+                lines[begin], prefix="PROGRAM *", gobble_after=")", strip=True, case_sensitive=False, optional_ops=["gobble_after"])
 
             index = programSpec.find("(")
             if index < 0:
@@ -222,13 +224,12 @@ class OutputFileParser:
             program = Program(name=programName, description=programDescription)
 
             parserName = programName.lower() + "_parser"
-            if not parserName in ProgramParser.program_parsers:
+            parser: Optional[ProgramParser] = get_program_parser(parserName)
+            if parser is None:
                 logger.warning(
                     "Skipping output of program \"%s\" as no parser for it is available" % programName)
             else:
                 # Use dedicated parser to make sense of the program's output
-                parser = ProgramParser.program_parsers[parserName]()
-
                 subIt = iter(range(begin, end))
 
                 try:
@@ -240,10 +241,10 @@ class OutputFileParser:
                     if i < len(programOutputIntervals) - 1 or self.output.calculation_finished:
                         # Only the parsing of the last program output in an unfinished calculation may
                         # raise a StopIteration
-                        logger.exception("Parsing the output of the \"%s\" program unexpectedly ran into EOF" % programName)
+                        logger.exception(
+                            "Parsing the output of the \"%s\" program unexpectedly ran into EOF" % programName)
 
             self.output.programs.append(program)
-
 
     def __processErrorOrWarning(self, lines: List[str], index: int) -> int:
         try:
