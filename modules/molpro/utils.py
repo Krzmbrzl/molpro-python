@@ -7,7 +7,9 @@ from molpro import OutputFormatError
 
 
 def consume(content: str, prefix: str = "", gobble_until: Optional[str] = None, gobble_from: Optional[str] = None, gobble_after: Optional[str] = None, strip=False,
-        optional_ops: List[str] = [], format_exception: type = OutputFormatError, case_sensitive: bool = True) -> str:
+            optional_ops: List[str] = [], format_exception: type = OutputFormatError, case_sensitive: bool = True) -> str:
+    """Consumes the given content by matching and removing the given patterns from it. Returns the remaining part of content. If the given patterns
+    don't match the given String, an error of type format_exception is risen"""
     if not case_sensitive:
         def transform(x): return x.lower()
     else:
@@ -52,6 +54,8 @@ def consume(content: str, prefix: str = "", gobble_until: Optional[str] = None, 
 
 def skip_to(content_list: List[str], indexIt: Iterator[int], contains: Optional[str] = None, startswith: Optional[str] = None, endswith: Optional[str]
             = None, default: Optional[int] = None, case_sensitive: bool = True) -> int:
+    """Proceeds the given iterator until the last index emitted by it, references an entry in content_list that matches the provided criterion.
+    Returns the found index. Note that the iterator will return the index AFTER the found one, when stepped after this function has been called"""
     if not case_sensitive:
         def transform(x): return x.lower()
     else:
