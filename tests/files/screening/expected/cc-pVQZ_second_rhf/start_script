@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+memory=$(( 2000 * 8 )) # Convert from MegaWords to MegaBytes
+
+
+qmolpro -n 1 -m ${memory}M -t 18:00 -d 200 cc-pVQZ_second_rhf.inp

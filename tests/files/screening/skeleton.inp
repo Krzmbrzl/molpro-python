@@ -1,0 +1,11 @@
+memory,%memory%,m
+nosym
+
+basis=%basis%
+
+! %arbitrary%
+%base_method%
+
+! Estimated runtime: %runtime% h
+! Estimated memory consumption: %memory% MW (MegaWords)
+! Estimated disk space usage: %disk_space% GB

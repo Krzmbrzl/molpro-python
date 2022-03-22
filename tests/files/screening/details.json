@@ -1,0 +1,27 @@
+{
+	"basis": [
+		"cc-pVDZ",
+		"cc-pVTZ",
+		"cc-pVQZ"
+	],
+	"arbitrary": [
+		{
+			"name": "first",
+			"value": "This can be an arbitrary string"
+		},
+		{
+			"name": "second",
+			"value": "This is yet another arbitrary string"
+		}
+	],
+	"base_method": [
+		{
+			"name": "rhf",
+			"value": "{rhf; maxit,100}"
+		},
+		{
+			"name": "mcscf",
+			"value": "{mcscf; maxit,80}"
+		}
+	]
+}

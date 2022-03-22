@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+memory=$(( 100 * 8 )) # Convert from MegaWords to MegaBytes
+
+
+qmolpro -n 1 -m ${memory}M -t 1:00 -d 7 cc-pVDZ_first_mcscf.inp
