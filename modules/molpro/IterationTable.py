@@ -25,3 +25,21 @@ class IterationTable:
 
         return column
 
+
+    def __eq__(self, other):
+        if isinstance(other, IterationTable):
+            return self.columnHeaders == other.columnHeaders and self.iterations == other.iterations
+        else:
+            return False
+
+    def __repr__(self):
+        representation = "IterationTable(\n  columnHeaders=%r,\n  iterations=[\n" % self.columnHeaders
+        for current in self.iterations:
+            representation += "    %r" % current + ",\n"
+        if representation.endswith(",\n"):
+            representation = representation[ : -2]
+
+        representation += "\n  ]\n)"
+
+        return representation
+
