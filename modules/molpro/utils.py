@@ -136,6 +136,7 @@ def parse_iteration_table(lines: List[str], lineIt: Iterator[int], format_except
         raise format_exception("The amount of found column headers (%d) does not match the expected one (%d)" % (
             len(headers), len(col_types)))
 
+
     iterations = []
 
     for i in lineIt:
@@ -145,14 +146,18 @@ def parse_iteration_table(lines: List[str], lineIt: Iterator[int], format_except
         iterations.append(process_columns(lines[i], delimiter=col_sep, remove_empty=True, expected_column_count=len(headers),
                                           format_exception=format_exception, types=col_types))
 
+
     # Remove specified columns. First convert column header names into column indices though
-    del_cols = {
-        x if type(x) is int else headers.index(x) for x in del_cols}
-    if any(not type(n) is int or n < 0 for n in del_cols):
+    try:
+        del_cols = {
+            x if type(x) is int else headers.index(x) for x in del_cols}
+    except ValueError as e:
         raise format_exception(
-            "Encountered invalid column index or column header ID (specified for deletion)")
+                "Encountered invalid column index or column header ID (specified for deletion): %s" % e)
+
 
     headers = [v for i, v in enumerate(headers) if not i in del_cols]
+
     for i in range(len(iterations)):
         iterations[i] = [v for i, v in enumerate(iterations[i]) if not i in del_cols]
 

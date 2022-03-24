@@ -67,7 +67,7 @@ class TestUtils(unittest.TestCase):
 
     def test_parse_iteration_table(self):
         lines = [
-            "ITER           ETOT              DE          GRAD        DDIFF     DIIS  NEXP   TIME(IT)  TIME(TOT)  DIAG",
+            "ITER           ETOT              DE          GRAD        DDIFF     DIIS  NEXP   TIME (IT)  TIME(TOT)  DIAG",
             "1      -75.98578855     -75.98578855     0.00D+00     0.40D+00     0     0       0.01      0.07    start",
             "2      -76.01569782      -0.02990927     0.37D-01     0.77D-01     1     0       0.00      0.07    diag",
             "3      -76.02461371      -0.00891589     0.20D-01     0.26D-01     2     0       0.01      0.08    diag",
@@ -75,7 +75,7 @@ class TestUtils(unittest.TestCase):
         lineIt = iter(range(len(lines)))
 
         parsedTable = utils.parse_iteration_table(lines, lineIt, col_types=[int, float, float, float, float, int, int, float, float, str],
-                                                  del_cols={"ITER"})
+                                                  del_cols={"ITER"}, substitutions={"TIME (IT)": "TIME(IT)"})
         expectedTable = IterationTable(columnHeaders=[
                                        "ETOT", "DE", "GRAD", "DDIFF", "DIIS", "NEXP", "TIME(IT)", "TIME(TOT)", "DIAG"],
                                        iterations=[
