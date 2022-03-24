@@ -177,7 +177,7 @@ def main():
     parser.add_argument("--out-dir", metavar="PATH", help="A path to the directory in which the respective files and directories shall be created",
                         default=".")
     parser.add_argument(
-        "--extension", help="The file extension to use for the generated input file (including the period)", default=".inp")
+        "--file-extension", help="The file extension to use for the generated input file (including the period)", default=".inp")
     parser.add_argument("--start-script-name", metavar="NAME", help="The name of the generated start-script (if any)", default="start_script")
 
     args = parser.parse_args()
@@ -254,7 +254,7 @@ def main():
 
         createdDirectories.append(currentName)
 
-        inputName = currentName + args.extension
+        inputName = currentName + args.file_extension
 
         # Write input file for calculation
         with open(os.path.join(outDir, inputName), "w") as outFile:
