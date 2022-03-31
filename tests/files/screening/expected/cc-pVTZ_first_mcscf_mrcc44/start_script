@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+memory=$(( 800 * 8 )) # Convert from MegaWords to MegaBytes
+
+
+# All parameters can be accessed here as well
+echo "Submitting job that uses the following correlation method: {cmrcc,max_en=4,max_res=4}"
+
+qmolpro -n 1 -m ${memory}M -t 5:00 -d 50 cc-pVTZ_first_mcscf_mrcc44.inp

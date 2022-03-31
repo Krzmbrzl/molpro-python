@@ -14,14 +14,32 @@
 			"value": "This is yet another arbitrary string"
 		}
 	],
-	"base_method": [
+	"scf_method": [
 		{
 			"name": "rhf",
-			"value": "{rhf; maxit,100}"
+			"value": "{rhf; maxit,100}",
+			"parameter": {
+				"correlation_method": [
+					"ccsd",
+					"cic"
+				]
+			}
 		},
 		{
 			"name": "mcscf",
-			"value": "{mcscf; maxit,80}"
+			"value": "{mcscf; maxit,80}",
+			"parameter": {
+				"correlation_method": [
+					{
+						"name": "mrcc42",
+						"value": "{cmrcc,max_en=4,max_res=2}"
+					},
+					{
+						"name": "mrcc44",
+						"value": "{cmrcc,max_en=4,max_res=4}"
+					}
+				]
+			}
 		}
 	]
 }

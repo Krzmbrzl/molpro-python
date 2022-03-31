@@ -43,7 +43,7 @@ def estimate_disk_space(options: Dict[str, str]):
 def exclude(options: Dict[str, str]):
     """Checks whether the given combination of options should be excluded from the screening"""
 
-    if options["basis"] == "cc-pVQZ" and "mcscf" in options["base_method"]:
+    if options["basis"] == "cc-pVQZ" and "mcscf" in options["scf_method"]:
         return True
     else:
         return False

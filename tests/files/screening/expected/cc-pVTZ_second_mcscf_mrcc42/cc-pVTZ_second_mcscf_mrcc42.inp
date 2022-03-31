@@ -1,0 +1,13 @@
+memory,800,m
+nosym
+
+basis=cc-pVTZ
+
+! This is yet another arbitrary string
+{mcscf; maxit,80}
+{cmrcc,max_en=4,max_res=2}
+
+! Estimated runtime: 5 h
+! Estimated memory consumption: 800 MW (MegaWords)
+! Estimated disk space usage: 50 GB
+! This file is called cc-pVTZ_second_mcscf_mrcc42.inp

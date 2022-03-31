@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+memory=$(( 2000 * 8 )) # Convert from MegaWords to MegaBytes
+
+
+# All parameters can be accessed here as well
+echo "Submitting job that uses the following correlation method: cic"
+
+qmolpro -n 1 -m ${memory}M -t 18:00 -d 200 cc-pVQZ_first_rhf_cic.inp

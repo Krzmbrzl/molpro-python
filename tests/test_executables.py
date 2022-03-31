@@ -39,9 +39,9 @@ class TestExecutables(unittest.TestCase):
             comp = filecmp.dircmp(tmp_dir.name, expectedDir)
 
             self.assertEqual(
-                comp.left_only, [], "Script didn't reproduce all files from expected directory")
+                comp.left_only, [], "Script produced superfluous files")
             self.assertEqual(comp.right_only, [],
-                             "Script produced superfluous files")
+                             "Script didn't reproduce all files from expected directory")
             self.assertEqual(comp.diff_files, [],
                              "Script produced different files")
         finally:

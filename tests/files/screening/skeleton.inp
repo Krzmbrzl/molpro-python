@@ -4,8 +4,10 @@ nosym
 basis=%basis%
 
 ! %arbitrary%
-%base_method%
+%scf_method%
+%correlation_method%
 
 ! Estimated runtime: %runtime% h
 ! Estimated memory consumption: %memory% MW (MegaWords)
 ! Estimated disk space usage: %disk_space% GB
+! This file is called %input_file%
