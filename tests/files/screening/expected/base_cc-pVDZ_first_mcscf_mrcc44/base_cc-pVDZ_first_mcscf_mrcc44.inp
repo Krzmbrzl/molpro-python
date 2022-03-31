@@ -1,0 +1,13 @@
+memory,100,m
+nosym
+
+basis=cc-pVDZ
+
+! This can be an arbitrary string
+{mcscf; maxit,80}
+{cmrcc,max_en=4,max_res=4}
+
+! Estimated runtime: 1 h
+! Estimated memory consumption: 100 MW (MegaWords)
+! Estimated disk space usage: 7 GB
+! This file is called base_cc-pVDZ_first_mcscf_mrcc44.inp

@@ -1,0 +1,13 @@
+memory,100,m
+nosym
+
+basis=cc-pVDZ
+
+! This can be an arbitrary string
+{rhf; maxit,100}
+ccsd
+
+! Estimated runtime: 1 h
+! Estimated memory consumption: 100 MW (MegaWords)
+! Estimated disk space usage: 7 GB
+! This file is called base_cc-pVDZ_first_rhf_ccsd.inp

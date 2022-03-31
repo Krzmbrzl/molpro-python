@@ -29,6 +29,7 @@ class TestExecutables(unittest.TestCase):
                             + " --aux-file-dir " +
                             os.path.join(workdir, "files",
                                          "screening", "aux-files/")
+                            + " --basename base"
                             + " --out-dir " + tmp_dir.name)
 
             self.assertEqual(ret, 0, "Invocation of create_screening failed")

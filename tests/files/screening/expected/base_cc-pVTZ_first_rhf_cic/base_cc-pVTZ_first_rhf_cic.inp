@@ -1,0 +1,13 @@
+memory,800,m
+nosym
+
+basis=cc-pVTZ
+
+! This can be an arbitrary string
+{rhf; maxit,100}
+cic
+
+! Estimated runtime: 5 h
+! Estimated memory consumption: 800 MW (MegaWords)
+! Estimated disk space usage: 50 GB
+! This file is called base_cc-pVTZ_first_rhf_cic.inp

@@ -164,6 +164,8 @@ def main():
     for i in range(len(names)):
         currentName = "_".join(names[i])
         currentSubstitutions = substitutions[i]
+        if not args.basename == "":
+            currentName = args.basename + "_" + currentName
         inputName = currentName + args.file_extension
 
         utils.add_extra_substitutions(
@@ -177,9 +179,6 @@ def main():
         formattedInput = utils.format(formattedInput, currentSubstitutions)
         if not scriptContent is None:
             scriptContent = utils.format(scriptContent, currentSubstitutions)
-
-        if not args.basename == "":
-            currentName = args.basename + "_" + currentName
 
         # Create a sub-dir for the current screening case
         outDir = os.path.join(args.out_dir, currentName)
