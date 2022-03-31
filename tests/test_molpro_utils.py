@@ -42,7 +42,7 @@ class TestIterationTable(unittest.TestCase):
             table.column("Doesn't exist")
 
 
-class TestUtils(unittest.TestCase):
+class TestMolproUtils(unittest.TestCase):
     def test_process_columns(self):
         line = "A B C D"
         expectedResult = ["A", "B", "C", "D"]
