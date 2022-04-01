@@ -14,7 +14,7 @@ from molpro import MULTI_Data
 from molpro import OutputFormatError
 
 
-def get_mcscf_columns(mcscfType: str) -> Tuple[List[str], List[type], Dict[str, str]]:
+def get_mcscf_columns(mcscfType: str) -> Tuple[List[str], List[List[type]], Dict[str, str]]:
     colNames = []
     colTypes = []
     substitutions = {}
@@ -35,7 +35,7 @@ def get_mcscf_columns(mcscfType: str) -> Tuple[List[str], List[type], Dict[str, 
     else:
         raise OutputFormatError("Unknown MCSCF type \"%s\"" % (mcscfType))
 
-    return colNames, colTypes, substitutions
+    return colNames, [colTypes], substitutions
 
 
 @register_program_parser

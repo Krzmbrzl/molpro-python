@@ -5,6 +5,8 @@ from typing import Any
 from typing import Dict
 from typing import Union
 from typing import Set
+from typing import Tuple
+from typing import Type
 
 from molpro import OutputFormatError
 from molpro import IterationTable
@@ -92,7 +94,14 @@ def iterate_to(it: Iterator[Any], to: Any):
         pass
 
 
-def process_columns(line: str, types: List[type] = [], delimiter: Optional[str] = None, expected_column_count: int = -1, format_exception: type =
+def get_count(types: Any) -> int:
+    try:
+        return len(types)
+    except TypeError:
+        return 1
+
+
+def process_columns(line: str, types: List[List[Union[Type, Tuple[Type]]]] = [], delimiter: Optional[str] = None, format_exception: Type =
                     OutputFormatError, remove_empty: bool = False) -> List[Any]:
     """Parses the given line by splitting it into different columns and optionally transforming each column to a given type"""
     columns = line.split() if delimiter is None else line.split(delimiter)
@@ -100,27 +109,69 @@ def process_columns(line: str, types: List[type] = [], delimiter: Optional[str] 
     if remove_empty:
         columns = [x for x in columns if x != ""]
 
-    if expected_column_count >= 0 and len(columns) != expected_column_count:
-        raise format_exception("Expected %d columns but got %d" % (
-            expected_column_count, len(columns)))
-
     if len(types) > 0:
-        if len(columns) != len(types):
-            raise format_exception("Amount of types (%d) doesn't match with amount of columns (%d)" % (
-                len(types), len(columns)))
+        col_counts = []
+        for option in types:
+            counter = 0
+            for currentType in option:
+                if not currentType is None:
+                    counter += get_count(currentType)
 
-        for i in range(len(columns)):
-            if types[i] is float:
+            col_counts.append(counter)
+
+        if not len(col_counts) == len(set(col_counts)):
+            raise RuntimeError(
+                "Can only have optional types, if the column count is still unique")
+
+        try:
+            type_idx = col_counts.index(len(columns))
+        except ValueError:
+            raise format_exception("Amount of types (%s) doesn't match with amount of columns (%d)" % (
+                str(col_counts), len(columns)))
+
+        convertedColumns = []
+
+        i = 0
+        colOffset = 0
+        while i < len(types[type_idx]):
+            currentType = types[type_idx][i]
+
+            if currentType is None:
+                convertedColumns.append(None)
+                i += 1
+                colOffset -= 1
+                continue
+
+            if currentType is float:
                 # Make sure we convert from Fortran-style scientific notation to regular one
-                columns[i] = columns[i].replace("D", "E")
+                columns[i + colOffset] = columns[i + colOffset].replace("D", "E")
 
-            columns[i] = types[i](columns[i])
+            if isinstance(currentType, type):
+                convertedColumns.append(currentType(columns[i + colOffset]))
+            else:
+                # Composite types, e.g. (str, int)
+                tmp = []
+                for j in range(len(currentType)):
+                    tmp.append(currentType[j](columns[i + colOffset + j]))
+
+                    if i + j == len(columns):
+                        raise format_exception(
+                            "Size of composite type exceeded column count")
+
+                colOffset += len(currentType) - 1
+
+                convertedColumns.append(tuple(tmp))
+
+            i += 1
+
+        columns = convertedColumns
 
     return columns
 
 
 def parse_iteration_table(lines: List[str], lineIt: Iterator[int], format_exception: type = OutputFormatError, col_sep: Optional[str] = None,
-                          col_types: List[type] = [], substitutions: Dict[str, str] = {}, del_cols: Set[Union[int, str]] = set()) -> IterationTable:
+                          col_types: List[List[Union[Type, Tuple[Type]]]] = [], substitutions: Dict[str, str] = {},
+                          del_cols: Set[Union[int, str]] = set()) -> IterationTable:
     headerLine = lines[next(lineIt)]
 
     for currentSub in substitutions:
@@ -129,13 +180,15 @@ def parse_iteration_table(lines: List[str], lineIt: Iterator[int], format_except
     headers = process_columns(
         headerLine, delimiter=col_sep, remove_empty=True, format_exception=format_exception)
 
+    # Only count non-None types
+    col_counts = [sum(1 for y in x if y) for x in col_types]
+
     if len(headers) == 0:
         raise format_exception(
             "Can't parse iteration table for empty header line")
-    if len(col_types) != 0 and len(headers) != len(col_types):
-        raise format_exception("The amount of found column headers (%d) does not match the expected one (%d)" % (
-            len(headers), len(col_types)))
-
+    if len(col_types) != 0 and not len(headers) in col_counts:
+        raise format_exception("The amount of found column headers (%d) does not match the expected one (%s)" % (
+            len(headers), str(col_counts)))
 
     iterations = []
 
@@ -143,9 +196,8 @@ def parse_iteration_table(lines: List[str], lineIt: Iterator[int], format_except
         if lines[i].strip() == "":
             break
 
-        iterations.append(process_columns(lines[i], delimiter=col_sep, remove_empty=True, expected_column_count=len(headers),
-                                          format_exception=format_exception, types=col_types))
-
+        iterations.append(process_columns(
+            lines[i], delimiter=col_sep, remove_empty=True, format_exception=format_exception, types=col_types))
 
     # Remove specified columns. First convert column header names into column indices though
     try:
@@ -153,14 +205,13 @@ def parse_iteration_table(lines: List[str], lineIt: Iterator[int], format_except
             x if type(x) is int else headers.index(x) for x in del_cols}
     except ValueError as e:
         raise format_exception(
-                "Encountered invalid column index or column header ID (specified for deletion): %s" % e)
-
+            "Encountered invalid column index or column header ID (specified for deletion): %s" % e)
 
     headers = [v for i, v in enumerate(headers) if not i in del_cols]
 
     for i in range(len(iterations)):
-        iterations[i] = [v for i, v in enumerate(iterations[i]) if not i in del_cols]
-
+        iterations[i] = [v for i, v in enumerate(
+            iterations[i]) if not i in del_cols]
 
     table = IterationTable(columnHeaders=headers, iterations=iterations)
 

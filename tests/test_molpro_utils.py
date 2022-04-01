@@ -62,7 +62,21 @@ class TestMolproUtils(unittest.TestCase):
         line = "1 0.5 bla 1D-5 0.1E+7"
         expectedResult = [1, 0.5, "bla", 1E-5, 0.1E7]
         result = utils.process_columns(
-            line, types=[int, float, str, float, float])
+            line, types=[[int, float, str, float, float]])
+        self.assertEqual(result, expectedResult)
+
+        # Use optional columns
+        line = "A 2 C"
+        expectedResult = ["A", 2, "C"]
+        result = utils.process_columns(
+            line, types=[[int, str, int, str], [str, int, str]])
+        self.assertEqual(result, expectedResult)
+
+        # Use composite types
+        line = "A 2 B C"
+        expectedResult = ["A", (2, "B"), "C"]
+        result = utils.process_columns(
+            line, types=[[str, (int, str), str]])
         self.assertEqual(result, expectedResult)
 
     def test_parse_iteration_table(self):
@@ -74,7 +88,7 @@ class TestMolproUtils(unittest.TestCase):
         ]
         lineIt = iter(range(len(lines)))
 
-        parsedTable = utils.parse_iteration_table(lines, lineIt, col_types=[int, float, float, float, float, int, int, float, float, str],
+        parsedTable = utils.parse_iteration_table(lines, lineIt, col_types=[[int, float, float, float, float, int, int, float, float, str]],
                                                   del_cols={"ITER"}, substitutions={"TIME (IT)": "TIME(IT)"})
         expectedTable = IterationTable(columnHeaders=[
                                        "ETOT", "DE", "GRAD", "DDIFF", "DIIS", "NEXP", "TIME(IT)", "TIME(TOT)", "DIAG"],
@@ -86,6 +100,27 @@ class TestMolproUtils(unittest.TestCase):
                                            [-76.02461371, -0.00891589, 0.2E-1,
                                                0.26E-1, 2, 0, 0.01, 0.08, "diag"]
         ])
+
+        self.assertEqual(parsedTable, expectedTable)
+
+
+        lines = [
+            "ITER  NCI SQNORM     DIAG(H_EFF)      E(PROJ)+DL      DL        |RES|     NSV   SV INCL   SV EXCL   DIIS     TIME   TIME/IT",
+            " 1    1  1.2838   -230.42152688   -230.20919500  -7.11e-01   2.07e+00     13  3.58e-01  1.39e-15   1  1   6354.45  6354.45",
+            " 2    1  1.3172   -230.44447074   -230.47744042  -5.54e-02   3.20e-01     13  2.58e-01  2.22e-15         12693.51  6346.76",
+        ]
+        lineIt = iter(range(len(lines)))
+
+        parsedTable = utils.parse_iteration_table(lines, lineIt, col_types=[
+            [int, int, float, float, float, float, float, int, float, float, (int, int), float, float],
+            [int, int, float, float, float, float, float, int, float, float, None, float, float]
+            ], del_cols={"ITER"}, substitutions={"SV INCL": "SV_INCL", "SV EXCL": "SV_EXCL"})
+        expectedTable = IterationTable(columnHeaders=["NCI", "SQNORM", "DIAG(H_EFF)", "E(PROJ)+DL", "DL", "|RES|", "NSV", "SV_INCL", "SV_EXCL",
+            "DIIS", "TIME", "TIME/IT"],
+            iterations=[
+                [1, 1.2838, -230.42152688, -230.20919500, -7.11E-1, 2.07, 13, 3.58E-1, 1.39E-15, (1,1), 6354.45, 6354.45],
+                [1, 1.3172, -230.44447074, -230.47744042, -5.54E-2, 3.20E-1, 13, 2.58E-1, 2.22E-15, None, 12693.51, 6346.76]
+            ])
 
         self.assertEqual(parsedTable, expectedTable)
 
