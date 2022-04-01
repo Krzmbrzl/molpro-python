@@ -15,7 +15,9 @@ class TestExecutables(unittest.TestCase):
 
         tmp_dir = tempfile.TemporaryDirectory()
         try:
-            ret = os.system("python3 " + os.path.join(exedir, "create_screenings.py")
+            ret = os.system(("PYTHONPATH=\"$PYTHONPATH:%s\" " % os.path.join(workdir, "..", "modules"))
+                            + "python3 " +
+                            os.path.join(exedir, "create_screenings.py")
                             + " --screening-file " + os.path.join(workdir, "files", "screening",
                                                                   "details.json")
                             + " --extensions " +
