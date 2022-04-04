@@ -49,5 +49,17 @@
 	"cic_closed_shell.out": {
 		"errors": [],
 		"warnings": []
+	},
+	"cic_open_shell.out": {
+		"errors": [],
+		"warnings": []
+	},
+	"ccsd_closed_shell.out": {
+		"errors": [],
+		"warnings": []
+	},
+	"ccsd_open_shell.out": {
+		"errors": [],
+		"warnings": []
 	}
 }
