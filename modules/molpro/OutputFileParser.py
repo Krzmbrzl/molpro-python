@@ -202,48 +202,51 @@ class OutputFileParser:
 
         self.output.calculation_finished = lines[-1] == "Molpro calculation terminated"
 
-        # Iterate over and parse individual program blocks
-        for i in range(len(programOutputIntervals)):
-            begin, end = programOutputIntervals[i]
+        if len(self.output.errors) == 0:
+            # Iterate over and parse individual program blocks, but only if we haven't encountered
+            # any errors so far. If we did, chances are that the output of the individual programs is
+            # corrupted and in order to avoid additional format exception, we rather not try parsing it.
+            for i in range(len(programOutputIntervals)):
+                begin, end = programOutputIntervals[i]
 
-            programSpec = utils.consume(
-                lines[begin], prefix="PROGRAM *", gobble_after=")", strip=True, case_sensitive=False, optional_ops=["gobble_after"])
+                programSpec = utils.consume(
+                    lines[begin], prefix="PROGRAM *", gobble_after=")", strip=True, case_sensitive=False, optional_ops=["gobble_after"])
 
-            index = programSpec.find("(")
-            if index < 0:
-                # If no parenthesis are present, then assume that everything is the name and no description is given
-                programName = programSpec.strip()
-                programDescription = ""
-            else:
-                programName = programSpec[: index].strip()
-                programDescription = programSpec[index + 1: -1].strip()
+                index = programSpec.find("(")
+                if index < 0:
+                    # If no parenthesis are present, then assume that everything is the name and no description is given
+                    programName = programSpec.strip()
+                    programDescription = ""
+                else:
+                    programName = programSpec[: index].strip()
+                    programDescription = programSpec[index + 1: -1].strip()
 
-            if programName == "":
-                raise OutputFormatError(
-                    "Program name in unexpected format: %s" % programSpec)
+                if programName == "":
+                    raise OutputFormatError(
+                        "Program name in unexpected format: %s" % programSpec)
 
-            program = Program(name=programName, description=programDescription)
+                program = Program(name=programName, description=programDescription)
 
-            parserName = programName.lower() + "_parser"
-            parser: Optional[ProgramParser] = get_program_parser(parserName)
-            if parser is None:
-                logger.warning(
-                    "Skipping output of program \"%s\" as no parser for it is available" % programName)
-            else:
-                # Use dedicated parser to make sense of the program's output
-                subIt = iter(range(begin, end))
+                parserName = programName.lower() + "_parser"
+                parser: Optional[ProgramParser] = get_program_parser(parserName)
+                if parser is None:
+                    logger.warning(
+                        "Skipping output of program \"%s\" as no parser for it is available" % programName)
+                else:
+                    # Use dedicated parser to make sense of the program's output
+                    subIt = iter(range(begin, end))
 
-                try:
-                    parsedOutput = parser.parse(lines, subIt, self.output)
+                    try:
+                        parsedOutput = parser.parse(lines, subIt, self.output)
 
-                    if not parsedOutput is None:
-                        program.output = parsedOutput
-                except StopIteration:
-                    if i < len(programOutputIntervals) - 1 or self.output.calculation_finished:
-                        # Only the parsing of the last program output in an unfinished calculation may
-                        # raise a StopIteration
-                        logger.exception(
-                            "Parsing the output of the \"%s\" program unexpectedly ran into EOF" % programName)
+                        if not parsedOutput is None:
+                            program.output = parsedOutput
+                    except StopIteration:
+                        if i < len(programOutputIntervals) - 1 or self.output.calculation_finished:
+                            # Only the parsing of the last program output in an unfinished calculation may
+                            # raise a StopIteration
+                            logger.exception(
+                                "Parsing the output of the \"%s\" program unexpectedly ran into EOF" % programName)
 
             self.output.programs.append(program)
 
