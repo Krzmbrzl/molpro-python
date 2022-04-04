@@ -3,6 +3,7 @@
 import argparse
 import os
 from enum import Enum
+import datetime
 
 from molpro import OutputFileParser
 from molpro import MolproError
@@ -12,7 +13,8 @@ class State(Enum):
     PENDING = 2
     ERROR = 3
     WARNING = 4
-    INVALID = 5
+    STALE = 5
+    INVALID = 6
 
 # https://stackoverflow.com/a/27265453
 NO_COLOR = "\033[0m"
@@ -21,6 +23,7 @@ GREEN = "\033[32m"
 ORANGE = "\033[33m"
 BLUE = "\033[34m"
 PURPLE = "\033[35m"
+CYAN = "\033[36m"
 
 def processFile(path):
     parser = OutputFileParser()
@@ -33,7 +36,16 @@ def processFile(path):
         if len(output.warnings) > 0:
             return State.WARNING
 
-        return State.OK if output.calculation_finished else State.PENDING
+        if output.calculation_finished:
+            return State.OK
+
+        lastModified = datetime.datetime.fromtimestamp(os.path.getmtime(path))
+
+        if (datetime.datetime.now() - lastModified).days > 7:
+            # If an output hasn't changed for a week, we consider it to be stale (probably the calculation has been cancelled)
+            return State.STALE
+
+        return State.PENDING
     except MolproError:
         return State.INVALID
 
@@ -48,6 +60,8 @@ def printStatus(path: str, state: State, indent: str = ""):
         msg += RED + "ERROR" + NO_COLOR
     elif state == State.WARNING:
         msg += ORANGE + "WARNING" + NO_COLOR
+    elif state == State.STALE:
+        msg += CYAN + "STALE" + NO_COLOR
     elif state == State.INVALID:
         msg += PURPLE + "INALID" + NO_COLOR
 
