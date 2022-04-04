@@ -134,6 +134,8 @@ def main():
         "--file-extension", help="The file extension to use for the generated input file (including the period)", default=".inp")
     parser.add_argument("--start-script-name", metavar="NAME",
                         help="The name of the generated start-script (if any)", default="start_script")
+    parser.add_argument("--extend", help="A flag indicating that the current run should extend an existing screening set, meaning that only those "
+                        + "cases are created that don't exist yet", action="store_true", default=False)
 
     args = parser.parse_args()
 
@@ -147,7 +149,6 @@ def main():
 
         substitutions, names = getScreeningSets(parsedContents)
         assert len(substitutions) == len(names)
-
 
     # If provided, read in the skeleton definition for the run-script
     runSkeleton = None
@@ -183,9 +184,14 @@ def main():
         # Create a sub-dir for the current screening case
         outDir = os.path.join(args.out_dir, currentName)
         if os.path.exists(outDir):
-            logger.error(
-                "Directory for screening case \"%s\" already exists" % outDir)
-            return 1
+            if args.extend:
+                # This case apparently already exists
+                continue
+            else:
+                # If we're not in extend-mode, then encountering an already existing case is considered an error
+                logger.error(
+                    "Directory for screening case \"%s\" already exists" % outDir)
+                return 1
         os.mkdir(outDir)
 
         createdDirectories.append(currentName)
