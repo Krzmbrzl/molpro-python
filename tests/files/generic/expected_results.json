@@ -37,5 +37,13 @@
 			"Reference energies from GeCCo and Molpro differ! (in CMRCC)",
 			"Reference energies from GeCCo and Molpro differ! (in CMRCC)"
 		]
+	},
+	"gecco_error.out": {
+		"errors": [
+			"ERROR IN <memman_alloc>: memory exceeded",
+			"ERROR IN <memman_alloc>: memory exceeded",
+			"ERROR IN <memman_alloc>: memory exceeded"
+		],
+		"warnings": []
 	}
 }

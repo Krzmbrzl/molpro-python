@@ -159,6 +159,25 @@ class CMRCC_Parser(ProgramParser):
         return data
 
     def parseGeCCo(self, lines: List[str], lineIt: Iterator[int], output: MolproOutput, data: CMRCC_Data) -> CMRCC_Data:
+        # First: Check for errors
+        lineIt, errorIt = itertools.tee(lineIt)
+        foundErrors = False
+        while True:
+            i = utils.skip_to(lines, errorIt, contains="ERROR", default=-1)
+
+            if i < 0:
+                # We reached the end of the respective output section
+                break
+            else:
+                foundErrors = True
+                output.errors.append(lines[i])
+
+        if foundErrors:
+            # If we stumbled upon errors in the output, the format may deviate from what we expect it to be and thus
+            # it is likely to run into format errors when continuing to parse as usual.
+            # Thus, we rather return immediately in this case
+            return data
+
         # Extract information about active space
         i = utils.skip_to(lines, lineIt, startswith="Number of core orbitals:")
         data.n_core_orbitals, data.core_orbitals = parse_orbital_spec(
@@ -185,7 +204,8 @@ class CMRCC_Parser(ProgramParser):
         i = utils.skip_to(lines, lineIt, startswith="Load integrals")
         time = float(utils.consume(
             lines[i], prefix="Load integrals", gobble_from="sec", strip=True))
-        time += float(utils.consume(lines[next(lineIt)],
+        i = utils.skip_to(lines, lineIt, startswith="Transform integrals")
+        time += float(utils.consume(lines[i],
                       prefix="Transform integrals", gobble_from="sec", strip=True))
         data.integral_transformation_duration = Duration(
             timedelta(seconds=time), Duration.Reference.CPU)
