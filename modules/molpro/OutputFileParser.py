@@ -2,6 +2,7 @@ from typing import List
 from typing import Optional
 import logging
 import itertools
+import os
 
 from molpro import MolproError
 from molpro import OutputFormatError
@@ -25,7 +26,7 @@ class OutputFileParser:
 
         try:
             # Assume content is a path
-            if len(content) < 100:
+            if len(content) < os.pathconf("/", "PC_PATH_MAX"):
                 content = open(content, "r")
         except (TypeError, FileNotFoundError):
             pass
