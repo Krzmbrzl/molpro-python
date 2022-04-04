@@ -229,14 +229,15 @@ class CMRCC_Parser(ProgramParser):
         if i < 0:
             output.errors.append("CMRCC (GeCCo) did not converge")
 
-
         # Fetch resulting energies
         # As it appears GeCCo will never do reference relaxation
         data.reference_relaxation = False
         i = utils.skip_to(lines, lineIt, startswith="Reference energy")
-        refEnergy = float(utils.consume(lines[i], prefix="Reference energy", strip=True))
+        refEnergy = float(utils.consume(
+            lines[i], prefix="Reference energy", strip=True))
         i = utils.skip_to(lines, lineIt, startswith="Correlation energy")
-        data.correlation_energy = float(utils.consume(lines[i], prefix="Correlation energy", strip=True))
+        data.correlation_energy = float(utils.consume(
+            lines[i], prefix="Correlation energy", strip=True))
         # The total energy is output in a strange format in the output, so we prefer to calculate it on-the-fly instead
         data.total_energy = data.correlation_energy + refEnergy
 
