@@ -144,7 +144,8 @@ def process_columns(line: str, types: List[List[Union[Type, Tuple[Type]]]] = [],
 
             if currentType is float:
                 # Make sure we convert from Fortran-style scientific notation to regular one
-                columns[i + colOffset] = columns[i + colOffset].replace("D", "E")
+                columns[i + colOffset] = columns[i +
+                                                 colOffset].replace("D", "E")
 
             if isinstance(currentType, type):
                 convertedColumns.append(currentType(columns[i + colOffset]))
@@ -216,3 +217,35 @@ def parse_iteration_table(lines: List[str], lineIt: Iterator[int], format_except
     table = IterationTable(columnHeaders=headers, iterations=iterations)
 
     return table
+
+
+def name_spin_sym(nElec: int) -> str:
+    """Finds the suitable name (or more general: string representation) for the given amount of unpaired
+    electrons. For instance 2 unpaired electrons represent a "Triplet"."""
+    names = ["Singlet", "Doublet", "Triplet", "Quartet",
+             "Quintet", "Sextet", "Septet", "Octet", "Nonet", "Decet"]
+
+    if nElec < len(names):
+        return names[nElec]
+
+    if nElec % 2:
+        return "S=%d" % (nElec // 2)
+    else:
+        return "S=%d/2" % nElec
+
+
+def parse_orbital_spec(spec: str, format_exception: type = OutputFormatError) -> Tuple[int, List[int]]:
+    """Parse the given orbital specs"""
+    # We expect the format to be e.g. "6 (   4   0   2   0 )" where the first number is the total
+    # number of orbitals and the individual numbers in parenthesis are the orbitals per irreducible
+    # representation.
+    if not "(" in spec and ")" in spec:
+        raise format_exception(
+            "Unexpected orbital specification format")
+
+    begin = spec.find("(")
+    end = spec.find(")")
+    total = spec[: begin].strip()
+    individual = spec[begin + 1: end].strip()
+
+    return (int(total), [int(x) for x in individual.split()])

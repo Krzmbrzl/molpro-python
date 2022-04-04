@@ -1,7 +1,6 @@
 from typing import Optional
 from typing import Iterator
 from typing import List
-from typing import Tuple
 
 from datetime import timedelta
 import itertools
@@ -14,35 +13,6 @@ from molpro import CMRCC_Data
 from molpro import utils
 from molpro import OutputFormatError
 from molpro import Duration
-
-
-def name_spin_sym(nElec: int) -> str:
-    names = ["Singlet", "Doublet", "Triplet", "Quartet",
-             "Quintet", "Sextet", "Septet", "Octet", "Nonet", "Decet"]
-
-    if nElec < len(names):
-        return names[nElec]
-
-    if nElec % 2:
-        return "S=%d" % (nElec // 2)
-    else:
-        return "S=%d/2" % nElec
-
-
-def parse_orbital_spec(spec: str) -> Tuple[int, List[int]]:
-    # We expect the format to be e.g. "6 (   4   0   2   0 )" where the first number is the total
-    # number of orbitals and the individual numbers in parenthesis are the orbitals per irreducible
-    # representation.
-    if not "(" in spec and ")" in spec:
-        raise OutputFormatError(
-            "CMRCC: Unexpected orbital specification format")
-
-    begin = spec.find("(")
-    end = spec.find(")")
-    total = spec[: begin].strip()
-    individual = spec[begin + 1: end].strip()
-
-    return (int(total), [int(x) for x in individual.split()])
 
 
 @register_program_parser
@@ -80,14 +50,14 @@ class CMRCC_Parser(ProgramParser):
 
         # Extract information about active space
         i = utils.skip_to(lines, lineIt, startswith="Number of core orbitals:")
-        data.n_core_orbitals, data.core_orbitals = parse_orbital_spec(
+        data.n_core_orbitals, data.core_orbitals = utils.parse_orbital_spec(
             utils.consume(lines[i], prefix="Number of core orbitals:", strip=True))
-        data.n_closed_orbitals, data.closed_orbitals = parse_orbital_spec(
+        data.n_closed_orbitals, data.closed_orbitals = utils.parse_orbital_spec(
             utils.consume(lines[next(lineIt)], prefix="Number of closed-shell orbitals:", strip=True))
         # Note the double-blank after "active"
-        data.n_active_orbitals, data.active_orbitals = parse_orbital_spec(
+        data.n_active_orbitals, data.active_orbitals = utils.parse_orbital_spec(
             utils.consume(lines[next(lineIt)], prefix="Number of active  orbitals:", strip=True))
-        data.n_external_orbitals, data.external_orbitals = parse_orbital_spec(
+        data.n_external_orbitals, data.external_orbitals = utils.parse_orbital_spec(
             utils.consume(lines[next(lineIt)], prefix="Number of external orbitals:", strip=True))
 
         # Check for integral transformation
@@ -180,13 +150,13 @@ class CMRCC_Parser(ProgramParser):
 
         # Extract information about active space
         i = utils.skip_to(lines, lineIt, startswith="Number of core orbitals:")
-        data.n_core_orbitals, data.core_orbitals = parse_orbital_spec(
+        data.n_core_orbitals, data.core_orbitals = utils.parse_orbital_spec(
             utils.consume(lines[i], prefix="Number of core orbitals:", strip=True))
-        data.n_closed_orbitals, data.closed_orbitals = parse_orbital_spec(
+        data.n_closed_orbitals, data.closed_orbitals = utils.parse_orbital_spec(
             utils.consume(lines[next(lineIt)], prefix="Number of inactive orbitals:", strip=True))
-        data.n_active_orbitals, data.active_orbitals = parse_orbital_spec(
+        data.n_active_orbitals, data.active_orbitals = utils.parse_orbital_spec(
             utils.consume(lines[next(lineIt)], prefix="Number of active orbitals:", strip=True))
-        data.n_external_orbitals, data.external_orbitals = parse_orbital_spec(
+        data.n_external_orbitals, data.external_orbitals = utils.parse_orbital_spec(
             utils.consume(lines[next(lineIt)], prefix="Number of virtual orbitals:", strip=True))
 
         # Get symmetry info
@@ -194,7 +164,7 @@ class CMRCC_Parser(ProgramParser):
         data.space_symmetry = int(utils.consume(
             lines[i], prefix="wfu symmetry", gobble_until="=", strip=True))
         i = utils.skip_to(lines, lineIt, startswith="unpaired electrons")
-        data.spin_symmetry = name_spin_sym(int(utils.consume(
+        data.spin_symmetry = utils.name_spin_sym(int(utils.consume(
             lines[i], prefix="unpaired electrons", gobble_until="=", strip=True)))
 
         # Integral transformation
