@@ -20,7 +20,7 @@ class CMRCC_Parser(ProgramParser):
     def __init__(self):
         super(ProgramParser, self).__init__()
 
-    def parse(self, lines: List[str], lineIt: Iterator[int], output: MolproOutput) -> Optional[ParserData]:
+    def doParse(self, lines: List[str], lineIt: Iterator[int], output: MolproOutput) -> Optional[ParserData]:
         data = CMRCC_Data()
 
         # We need to parse the "PROGRAM * ..." line to figure out whether this is the ITF-based (Molpro-internal) implementation

@@ -17,7 +17,7 @@ class RHF_Parser(ProgramParser):
         super(ProgramParser, self).__init__()
 
 
-    def parse(self, lines: List[str], lineIt: Iterator[int], output: MolproOutput) -> Optional[ParserData]:
+    def doParse(self, lines: List[str], lineIt: Iterator[int], output: MolproOutput) -> Optional[ParserData]:
         data = RHF_Data()
 
         iterationHeaderLine = utils.skip_to(lines, lineIt, startswith="ITER")

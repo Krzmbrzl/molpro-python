@@ -17,7 +17,7 @@ class SEWARD_Parser(ProgramParser):
         super(ProgramParser, self).__init__()
 
 
-    def parse(self, lines: List[str], lineIt: Iterator[int], output: MolproOutput) -> Optional[ParserData]:
+    def doParse(self, lines: List[str], lineIt: Iterator[int], output: MolproOutput) -> Optional[ParserData]:
         data = SEWARD_Data()
         
         lineIt, lookaheadIt = itertools.tee(lineIt)

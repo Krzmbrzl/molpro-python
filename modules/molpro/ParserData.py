@@ -1,6 +1,10 @@
+from typing import Optional
+
+from molpro import ProgramMetadata
+
 class ParserData:
     def __init__(self):
-        pass
+        self.metadata: Optional[ProgramMetadata] = None
 
 
     def associatedProgrameName(self):

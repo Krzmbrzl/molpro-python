@@ -1,14 +1,16 @@
+from molpro.MolproError import MolproError
+from molpro.OutputFormatError import OutputFormatError
+
 from molpro.Node import Node
+from molpro.Duration import Duration
+from molpro.IterationTable import IterationTable
+from molpro.ProgramMetadata import ProgramMetadata
+from molpro.ProgramMetadataParser import ProgramMetadataParser
 from molpro.ParserData import ParserData
 from molpro.ProgramParser import ProgramParser
 from molpro.ProgramParser import register_program_parser
 from molpro.ProgramParser import get_program_parser
 from molpro.Program import Program
-from molpro.IterationTable import IterationTable
-from molpro.Duration import Duration
-
-from molpro.MolproError import MolproError
-from molpro.OutputFormatError import OutputFormatError
 
 from molpro.SEWARD_Data import SEWARD_Data
 from molpro.MULTI_Data import MULTI_Data
