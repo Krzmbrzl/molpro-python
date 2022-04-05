@@ -248,7 +248,7 @@ class OutputFileParser:
                             logger.exception(
                                 "Parsing the output of the \"%s\" program unexpectedly ran into EOF" % programName)
 
-            self.output.programs.append(program)
+                self.output.programs.append(program)
 
     def __processErrorOrWarning(self, lines: List[str], index: int) -> int:
         try:
