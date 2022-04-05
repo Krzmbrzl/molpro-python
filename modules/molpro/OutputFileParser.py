@@ -12,6 +12,7 @@ from molpro import utils
 from molpro import get_program_parser
 from molpro import Program
 from molpro import ProgramParser
+from molpro import Duration
 
 logger = logging.getLogger("molpro.outputfileparser")
 
@@ -237,10 +238,7 @@ class OutputFileParser:
                     subIt = iter(range(begin, end))
 
                     try:
-                        parsedOutput = parser.parse(lines, subIt, self.output)
-
-                        if not parsedOutput is None:
-                            program.output = parsedOutput
+                        program.output = parser.parse(lines, subIt, self.output)
                     except StopIteration:
                         if i < len(programOutputIntervals) - 1 or self.output.calculation_finished:
                             # Only the parsing of the last program output in an unfinished calculation may
@@ -249,6 +247,21 @@ class OutputFileParser:
                                 "Parsing the output of the \"%s\" program unexpectedly ran into EOF" % programName)
 
                 self.output.programs.append(program)
+
+            for i in range(len(self.output.programs)):
+                if self.output.programs[i].output is None:
+                    continue
+                if i == 0:
+                    self.output.programs[i].output.metadata.cpu_time = self.output.programs[i].output.metadata.total_cpu_time_so_far
+                    self.output.programs[i].output.metadata.wall_time = self.output.programs[i].output.metadata.total_wall_time_so_far
+                elif not self.output.programs[i - 1].output is None:
+                    cpuTime = self.output.programs[i].output.metadata.total_cpu_time_so_far.duration - \
+                        self.output.programs[i - 1].output.metadata.total_cpu_time_so_far.duration
+                    wallTime = self.output.programs[i].output.metadata.total_wall_time_so_far.duration - \
+                        self.output.programs[i - 1].output.metadata.total_wall_time_so_far.duration
+
+                    self.output.programs[i].output.metadata.cpu_time = Duration(cpuTime, Duration.Reference.CPU)
+                    self.output.programs[i].output.metadata.wall_time = Duration(wallTime, Duration.Reference.WALL)
 
     def __processErrorOrWarning(self, lines: List[str], index: int) -> int:
         try:
