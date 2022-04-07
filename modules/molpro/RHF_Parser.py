@@ -18,7 +18,6 @@ class RHF_Parser(ProgramParser):
     def __init__(self):
         super(ProgramParser, self).__init__()
 
-
     def doParse(self, lines: List[str], lineIt: Iterator[int], output: MolproOutput) -> Optional[ParserData]:
         data = RHF_Data()
 
@@ -29,8 +28,9 @@ class RHF_Parser(ProgramParser):
         utils.iterate_to(lineIt, i - 1)
 
         data.iterations = utils.parse_iteration_table(lines, lineIt,
-                col_types=[[int, float, float, float, float, int, int, float, float, str]],
-                del_cols={"ITER"})
+                                                      col_types=[
+                                                          [int, float, float, float, float, int, int, float, float, str]],
+                                                      del_cols={"ITER"})
 
         # Skip empty lines
         followingLine = next(lineIt)
@@ -39,7 +39,8 @@ class RHF_Parser(ProgramParser):
 
         if lines[followingLine].startswith("?"):
             # We assume that this is an error stating that RHF didn't converge
-            utils.consume(lines[followingLine], prefix="?No convergence in rhfpr")
+            utils.consume(lines[followingLine],
+                          prefix="?No convergence in rhfpr")
             data.converged = False
 
             output.errors.append("RHF failed to converge")
@@ -48,7 +49,7 @@ class RHF_Parser(ProgramParser):
 
         # Skip to and read final energy
         energyLine = utils.skip_to(lines, lineIt, startswith="!RHF STATE")
-        data.energy = float(utils.consume(lines[energyLine], prefix="!RHF STATE", gobble_until="Energy", strip=True))
-
+        data.energy = float(utils.consume(
+            lines[energyLine], prefix="!RHF STATE", gobble_until="Energy", strip=True))
 
         return data
