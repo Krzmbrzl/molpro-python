@@ -16,7 +16,7 @@ class TestIterationTable(unittest.TestCase):
             ["Three", 3, 0.3]
         ]
 
-        table = IterationTable(columnHeaders=headers, iterations=data)
+        table = IterationTable(headers=headers, rows=data)
 
         self.assertEqual(table.iteration(1), data[0])
         self.assertEqual(table.iteration(3), data[2])
@@ -33,7 +33,7 @@ class TestIterationTable(unittest.TestCase):
             ["Three", 3, 0.3]
         ]
 
-        table = IterationTable(columnHeaders=headers, iterations=data)
+        table = IterationTable(headers=headers, rows=data)
 
         self.assertEqual(table.column("A"), ["One", "Two", "Three"])
         self.assertEqual(table.column("B"), [1, 2, 3])
@@ -90,9 +90,9 @@ class TestMolproUtils(unittest.TestCase):
 
         parsedTable = utils.parse_iteration_table(lines, lineIt, col_types=[[int, float, float, float, float, int, int, float, float, str]],
                                                   del_cols={"ITER"}, substitutions={"TIME (IT)": "TIME(IT)"})
-        expectedTable = IterationTable(columnHeaders=[
+        expectedTable = IterationTable(headers=[
                                        "ETOT", "DE", "GRAD", "DDIFF", "DIIS", "NEXP", "TIME(IT)", "TIME(TOT)", "DIAG"],
-                                       iterations=[
+                                       rows=[
                                            [-75.98578855, -75.98578855, 0,
                                                0.4, 0, 0, 0.01, 0.07, "start"],
                                            [-76.01569782, -0.02990927, 0.37E-1,
@@ -115,9 +115,9 @@ class TestMolproUtils(unittest.TestCase):
             [int, int, float, float, float, float, float, int, float, float, (int, int), float, float],
             [int, int, float, float, float, float, float, int, float, float, None, float, float]
             ], del_cols={"ITER"}, substitutions={"SV INCL": "SV_INCL", "SV EXCL": "SV_EXCL"})
-        expectedTable = IterationTable(columnHeaders=["NCI", "SQNORM", "DIAG(H_EFF)", "E(PROJ)+DL", "DL", "|RES|", "NSV", "SV_INCL", "SV_EXCL",
+        expectedTable = IterationTable(headers=["NCI", "SQNORM", "DIAG(H_EFF)", "E(PROJ)+DL", "DL", "|RES|", "NSV", "SV_INCL", "SV_EXCL",
             "DIIS", "TIME", "TIME/IT"],
-            iterations=[
+            rows=[
                 [1, 1.2838, -230.42152688, -230.20919500, -7.11E-1, 2.07, 13, 3.58E-1, 1.39E-15, (1,1), 6354.45, 6354.45],
                 [1, 1.3172, -230.44447074, -230.47744042, -5.54E-2, 3.20E-1, 13, 2.58E-1, 2.22E-15, None, 12693.51, 6346.76]
             ])

@@ -35,7 +35,7 @@ class RHF_Parser(ProgramParser):
         # Keep column headers as-is, except drop "ITER" column (we don't need that)
         headers.pop(0)
 
-        data.iterations.columnHeaders = headers
+        data.iterations.headers = headers
 
         # Iterate over the different iterations
         for i in lineIt:
@@ -56,7 +56,7 @@ class RHF_Parser(ProgramParser):
             entries = [float(entries[0]), float(entries[1]), float(entries[2].replace("D", "E")), float(entries[3].replace("D", "E")),
                        int(entries[4]), int(entries[5]), float(entries[6]), float(entries[7]), entries[8]]
             
-            data.iterations.iterations.append(entries)
+            data.iterations.rows.append(entries)
 
 
         # Skip empty lines

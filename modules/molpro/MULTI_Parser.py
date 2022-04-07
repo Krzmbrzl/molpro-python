@@ -114,9 +114,9 @@ class MULTI_Parser(ProgramParser):
                                             expectedHeaders[0]}, substitutions=substitutions)
         # Make sure to also remove the ITER column from the expected headers, before comparing it with the parsed result
         expectedHeaders.pop(0)
-        if not table.columnHeaders == expectedHeaders:
+        if not table.headers == expectedHeaders:
             raise OutputFormatError(
-                "Expected MULTI iterations header to be %s but got %s" % (expectedHeaders, table.columnHeaders))
+                "Expected MULTI iterations header to be %s but got %s" % (expectedHeaders, table.headers))
 
         data.iterations = table
 

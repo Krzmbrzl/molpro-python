@@ -214,7 +214,7 @@ def parse_iteration_table(lines: List[str], lineIt: Iterator[int], format_except
         iterations[i] = [v for i, v in enumerate(
             iterations[i]) if not i in del_cols]
 
-    table = IterationTable(columnHeaders=headers, iterations=iterations)
+    table = IterationTable(headers=headers, rows=iterations)
 
     return table
 
