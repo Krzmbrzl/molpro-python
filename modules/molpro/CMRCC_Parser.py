@@ -120,7 +120,7 @@ class CMRCC_Parser(ProgramParser):
         if data.reference_relaxation:
             i = utils.skip_to(lines, lineIt, startswith="Correlation energy",
                               contains="relative to relaxed reference")
-            data.correlation_energy = float(utils.consume(
+            data.correlation_energy_relaxed = float(utils.consume(
                 lines[i], prefix="Correlation energy:", gobble_from="(", strip=True))
         i = utils.skip_to(lines, lineIt, startswith="!Total energy:")
         data.total_energy = float(utils.consume(
