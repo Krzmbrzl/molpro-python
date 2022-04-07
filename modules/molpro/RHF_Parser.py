@@ -2,6 +2,8 @@ from typing import List
 from typing import Iterator
 from typing import Optional
 
+import itertools
+
 from molpro import ProgramParser
 from molpro import register_program_parser
 from molpro import utils
@@ -20,44 +22,15 @@ class RHF_Parser(ProgramParser):
     def doParse(self, lines: List[str], lineIt: Iterator[int], output: MolproOutput) -> Optional[ParserData]:
         data = RHF_Data()
 
-        iterationHeaderLine = utils.skip_to(lines, lineIt, startswith="ITER")
+        lineIt, peekIt = itertools.tee(lineIt)
 
-        headers = lines[iterationHeaderLine].split()
-        expectedHeaders = ["ITER", "ETOT", "DE", "GRAD", "DDIFF",
-                           "DIIS", "NEXP", "TIME(IT)", "TIME(TOT)", "DIAG"]
+        i = utils.skip_to(lines, peekIt, startswith="ITER")
 
-        if not headers == expectedHeaders:
-            raise OutputFormatError("Expected column headers for RHF iterations to be %s but got %s" % (
-                str(expectedHeaders), str(headers)))
+        utils.iterate_to(lineIt, i - 1)
 
-        # TODO someday: Give alternate (more readable) names to columns (as alternative access keys)
-
-        # Keep column headers as-is, except drop "ITER" column (we don't need that)
-        headers.pop(0)
-
-        data.iterations.headers = headers
-
-        # Iterate over the different iterations
-        for i in lineIt:
-            entries = lines[i].split()
-
-            if len(entries) == 0:
-                # Empty line -> End of iterations
-                break
-
-            if not len(entries) == len(headers) + 1:
-                raise OutputFormatError("Expected RHF iteration information to consist of %d parts but got %d" % (
-                    len(headers) + 1, len(entries)))
-
-            # remove first column ("ITER") as we don't need that
-            entries.pop(0)
-
-            # Convert the different columns into the proper data type
-            entries = [float(entries[0]), float(entries[1]), float(entries[2].replace("D", "E")), float(entries[3].replace("D", "E")),
-                       int(entries[4]), int(entries[5]), float(entries[6]), float(entries[7]), entries[8]]
-            
-            data.iterations.rows.append(entries)
-
+        data.iterations = utils.parse_iteration_table(lines, lineIt,
+                col_types=[[int, float, float, float, float, int, int, float, float, str]],
+                del_cols={"ITER"})
 
         # Skip empty lines
         followingLine = next(lineIt)
