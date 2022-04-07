@@ -71,7 +71,7 @@ class RHF_Parser(ProgramParser):
 
             output.errors.append("RHF failed to converge")
         else:
-            data.convered = True
+            data.converged = True
 
         # Skip to and read final energy
         energyLine = utils.skip_to(lines, lineIt, startswith="!RHF STATE")
