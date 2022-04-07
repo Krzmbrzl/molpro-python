@@ -7,3 +7,6 @@ class RHF_Data(ParserData):
         self.iterations: IterationTable = IterationTable()
         self.converged: bool = False
         self.energy: float = 0
+
+    def associatedProgramName(self):
+        return "RHF"

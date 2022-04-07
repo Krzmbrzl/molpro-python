@@ -16,5 +16,5 @@ class MULTI_Data(ParserData):
         self.converged: bool = False
         self.iterations: IterationTable = IterationTable()
 
-    def associatedProgrameName(self):
+    def associatedProgramName(self):
         return "MULTI"

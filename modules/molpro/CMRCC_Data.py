@@ -30,5 +30,5 @@ class CMRCC_Data(ParserData):
         self.correlation_energy_relaxed: Optional[float] = None
         self.total_energy: float = 0
 
-    def associatedProgrameName(self):
+    def associatedProgramName(self):
         return "CMRCC"

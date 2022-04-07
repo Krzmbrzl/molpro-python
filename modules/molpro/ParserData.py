@@ -7,5 +7,5 @@ class ParserData:
         self.metadata: Optional[ProgramMetadata] = None
 
 
-    def associatedProgrameName(self):
+    def associatedProgramName(self):
         raise RuntimeError("This function should have been implemented by subclasses")

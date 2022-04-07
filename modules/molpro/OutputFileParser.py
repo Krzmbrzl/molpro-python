@@ -22,6 +22,8 @@ class OutputFileParser:
         self.output = MolproOutput()
 
     def parse(self, content) -> MolproOutput:
+        """Parse the given content and return a MolproOutput object representing the parsed result. The given
+        content can either be a file-path, a file handle or just the literal content to be parsed."""
         # Reset output object
         self.output = MolproOutput()
 

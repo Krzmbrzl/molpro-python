@@ -8,8 +8,6 @@ class SEWARD_Data(ParserData):
         self.molecule_type: Optional[str] = None
         self.basis_set_size: int = -1
 
-    def associatedProgrameName(self):
+    def associatedProgramName(self):
         return "SEWARD"
-
-
 

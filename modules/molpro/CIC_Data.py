@@ -21,5 +21,5 @@ class CIC_Data(ParserData):
         self.total_energy: float = 0
         self.correlation_energy: float = 0
 
-    def associatedProgrameName(self):
+    def associatedProgramName(self):
         return "CIC"
