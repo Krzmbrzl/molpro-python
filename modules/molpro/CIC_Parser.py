@@ -47,6 +47,12 @@ class CIC_Parser(ProgramParser):
                                                           "TOTAL ENERGY": "TOTAL_ENERGY", "ENERGY CHANGE": "ENERGY_CHANGE"},
                                                       del_cols={"ITER."})
 
+        # The first iteration in the CIC output is not really an iteration in and of its own right. It appears to be
+        # more of a "read in reference energy" kind of a step, which obviously is super quick.
+        # Therefore, we don't want this to count as a separate iteration and will delete that row
+        if not len(data.iterations.rows) == 0:
+            data.iterations.rows.pop(0)
+
         # Check for convergence
         lineIt, peekIt = itertools.tee(lineIt)
         i = utils.skip_to(
