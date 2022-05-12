@@ -29,6 +29,7 @@ class CMRCC_Data(ParserData):
         self.correlation_energy: float = 0
         self.correlation_energy_relaxed: Optional[float] = None
         self.total_energy: float = 0
+        self.converged: bool = False
 
     def associatedProgramName(self):
         return "CMRCC"

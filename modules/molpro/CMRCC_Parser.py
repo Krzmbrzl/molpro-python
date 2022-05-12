@@ -100,6 +100,9 @@ class CMRCC_Parser(ProgramParser):
             lines, peekIt, startswith="WARNING: Failed to converge", default=-1)
         if i != -1:
             output.errors.append("CMRCC calculation failed to converge")
+            data.converged = False
+        else:
+            data.converged = True
 
         # Extract info about runtime
         i = utils.skip_to(lines, lineIt, startswith="Time per iteration")
