@@ -36,3 +36,5 @@ else:
 	for currentError in output.errors:
 		print("  - " + currentError)
 ```
+
+For more detailed information, please refer to the [docs](docs/) subdirectory.
