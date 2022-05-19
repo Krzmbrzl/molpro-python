@@ -7,7 +7,7 @@ from molpro import OutputFileParser
 
 def main():
     parser = OutputFileParser()
-    output = parser.parse("all_good_1.out")
+    output = parser.parse("path/to/file.out")
 
     if len(output.errors) > 0 or len(output.warnings) > 0:
         print("Detected errors or warnings -> Aborting")
