@@ -25,15 +25,23 @@ BLUE = "\033[34m"
 PURPLE = "\033[35m"
 CYAN = "\033[36m"
 
-def processFile(path):
+def processFile(path: str, verbose: bool = False):
     parser = OutputFileParser()
 
     try:
         output = parser.parse(path)
 
         if len(output.errors) > 0:
+            print("Found " + str(len(output.errors)) + " errors:")
+            for currentError in output.errors:
+                print("  " + currentError)
+
             return State.ERROR
         if len(output.warnings) > 0:
+            print("Found " + str(len(output.warnings)) + " warnings:")
+            for currentWarning in output.warnings:
+                print("  " + currentWarning)
+
             return State.WARNING
 
         if output.calculation_finished:
@@ -46,7 +54,10 @@ def processFile(path):
             return State.STALE
 
         return State.PENDING
-    except MolproError:
+    except MolproError as e:
+        if verbose:
+            print("Parsing failed: " + str(e))
+
         return State.INVALID
 
 
@@ -74,6 +85,7 @@ def main():
     parser = argparse.ArgumentParser(description="Evaluates and prints the status of (Molpro) calculations in the given directory")
 
     parser.add_argument("paths", help="A list of paths (space-separated) to output files or directories containing output files", nargs="*")
+    parser.add_argument("-v", "--verbose", action="store_true", help="Use a more verbose output", default=False)
 
     args = parser.parse_args()
 
@@ -84,9 +96,9 @@ def main():
                 fullPath = os.path.join(currentPath, subFile)
 
                 if os.path.isfile(fullPath) and fullPath.endswith(".out") and not subFile.startswith("slurm"):
-                    printStatus(fullPath, processFile(fullPath), indent="  > ")
+                    printStatus(fullPath, processFile(fullPath, verbose=args.verbose), indent="  > ")
         else:
-            printStatus(currentPath, processFile(currentPath))
+            printStatus(currentPath, processFile(currentPath, verbose=args.verbose))
 
 
 if __name__ == "__main__":
