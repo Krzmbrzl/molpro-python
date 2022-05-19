@@ -8,7 +8,6 @@ from molpro import ProgramParser
 from molpro import register_program_parser
 from molpro import utils
 from molpro import RHF_Data
-from molpro import OutputFormatError
 from molpro import MolproOutput
 from molpro import ParserData
 
@@ -49,7 +48,7 @@ class RHF_Parser(ProgramParser):
 
         # Skip to and read final energy
         energyLine = utils.skip_to(lines, lineIt, startswith="!RHF STATE")
-        data.energy = float(utils.consume(
+        data.total_energy = float(utils.consume(
             lines[energyLine], prefix="!RHF STATE", gobble_until="Energy", strip=True))
 
         return data
