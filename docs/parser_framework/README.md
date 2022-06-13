@@ -24,8 +24,8 @@ you can either pass a path to a file, an opened file handle or a string represen
 from molpro import OutputFileParser
 
 def main():
-	parser = OutputFileParser()
-	output = parser.parse("./path_to_my_output_file.out")
+    parser = OutputFileParser()
+    output = parser.parse("./path_to_my_output_file.out")
 ```
 
 Calling this function will either raise a `MolproError`, in case the provided output file could not be parsed or it will return an object of type
