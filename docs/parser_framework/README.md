@@ -49,8 +49,8 @@ program-specific output object. So a `CMRCC_Parser` will produce a `CMRCC_Data` 
 see which fields are available in the different `ParserData` subclasses, have a look at the respective `*_Data` classes.
 
 Available program parsers:
-| ----------- | ------------------------------------------------------ | --------------------------------------------------- |
 | **Program** | **Parser**                                             | **Data object**                                     |
+| ----------- | ------------------------------------------------------ | --------------------------------------------------- |
 | CCSD        | [CCSD_Parser](../../modules/molpro/CCSD_Parser.py)     | [CCSD_Data](../../modules/molpro/CCSD_Data.py)      |
 | CIC         | [CIC_Parser](../../modules/molpro/CIC_Parser.py)       | [CIC_Data](../../modules/molpro/CIC_Data.py)        |
 | CMRCC       | [CMRCC_Parser](../../modules/molpro/CMRCC_Parser.py)   | [CMRCC_Data](../../modules/molpro/CMRCC_Data.py)    |
